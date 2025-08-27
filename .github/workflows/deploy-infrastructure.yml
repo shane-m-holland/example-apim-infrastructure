@@ -38,16 +38,13 @@ concurrency:
 jobs:
   # Validate configuration before deployment
   validate:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Validate Infrastructure Configuration
-      uses: shane-m-holland/azure-apim-bicep/.github/workflows/validate-config.yml@v1
-      with:
-        environment: ${{ inputs.environment }}
-        config-repo: ${{ github.repository }}
-        validate-azure-resources: true
-      # secrets:
-      #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    uses: shane-m-holland/azure-apim-bicep/.github/workflows/validate-config.yml@v1
+    with:
+      environment: ${{ inputs.environment }}
+      config-repo: ${{ github.repository }}
+      validate-azure-resources: true
+    # secrets:
+    #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
         
   # Deploy infrastructure
   deploy:
