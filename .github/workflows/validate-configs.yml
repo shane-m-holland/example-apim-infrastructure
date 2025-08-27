@@ -50,6 +50,7 @@ jobs:
       environment: ${{ needs.determine-scope.outputs.environment }}
       config-repo: ${{ github.repository }}
       validate-azure-resources: ${{ inputs.validate_azure_resources || false }}
+      infra-only-validation: true
     # secrets:
     #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
     #   CONFIG_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}

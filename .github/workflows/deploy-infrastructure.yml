@@ -43,6 +43,7 @@ jobs:
       environment: ${{ inputs.environment }}
       config-repo: ${{ github.repository }}
       validate-azure-resources: true
+      infra-only-validation: true
     # secrets:
     #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
         
