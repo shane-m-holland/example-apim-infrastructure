@@ -44,8 +44,8 @@ jobs:
       config-repo: ${{ github.repository }}
       validate-azure-resources: true
       infra-only-validation: true
-    # secrets:
-    #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
         
   # Deploy infrastructure
   deploy:
@@ -57,8 +57,8 @@ jobs:
       dry-run: ${{ inputs.dry_run }}
       config-repo: ${{ github.repository }}
       apim-tooling-version: v1  # Pin to specific version for stability
-    # secrets:
-    #   AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
     #   CONFIG_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
   # Notify on completion
