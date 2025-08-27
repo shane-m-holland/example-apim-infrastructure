@@ -45,7 +45,7 @@ jobs:
 
   validate-configurations:
     needs: determine-scope
-    uses: your-org/azure-apim-bicep/.github/workflows/validate-config.yml@v1
+    uses: shane-m-holland/azure-apim-bicep/.github/workflows/validate-config.yml@v1
     with:
       environment: ${{ needs.determine-scope.outputs.environment }}
       config-repo: ${{ github.repository }}
