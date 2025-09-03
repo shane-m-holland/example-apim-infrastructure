@@ -14,6 +14,10 @@
 
 name: Deploy API from Config Repository
 
+permissions:
+  contents: read          # Read repository contents
+  deployments: write        # Create deployment status
+
 on:
   # Automatic deployment on merges
 #   push:
