@@ -113,7 +113,6 @@ jobs:
     - name: Validate Config Repository Structure
       run: |
         echo "🔍 Validating config repository structure..."
-        echo "Config Repository: ${{ env.CONFIG_REPO }}"
         echo "Service: ${{ env.SERVICE_NAME }}"
         echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
         echo ""
@@ -145,7 +144,6 @@ jobs:
       
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      CONFIG_REPO_TOKEN: ${{ secrets.CONFIG_REPO_TOKEN }}
       
   # Post-deployment testing (optional)
   post-deployment-test:
@@ -197,7 +195,7 @@ jobs:
         echo "Service: ${{ env.SERVICE_NAME }}"
         echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
         echo "Approach: Config Repository (Centralized specs)"
-        echo "Config Repository: ${{ env.CONFIG_REPO }}"
+        echo "Config Repository: ${{ github.repository }}"
         echo "Commit: ${{ github.sha }}"
         
         # Add your notification logic here (Slack, Teams, email, etc.)
