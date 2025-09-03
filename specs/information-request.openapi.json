@@ -1,0 +1,1333 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "DEV01 Information Request REST",
+        "description": "REST API specifications for Information Retrieval and Command Service.",
+        "version": "1.0"
+    },
+    "paths": {
+        "/v2/companies": {
+            "get": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "Retrieve list of companies",
+                "description": "Retrieve list of companies",
+                "operationId": "getCompanies",
+                "parameters": [{
+                    "name": "all",
+                    "in": "query",
+                    "description": "When set to true, the service will return all the records for member companies",
+                    "schema": {
+                        "enum": ["true"],
+                        "type": "string"
+                    }
+                }, {
+                    "name": "download",
+                    "in": "query",
+                    "description": "When set to true, downloads the companies.xml file",
+                    "schema": {
+                        "enum": ["true"],
+                        "type": "string"
+                    }
+                }, {
+                    "name": "cocodes",
+                    "in": "query",
+                    "description": "To retrieve company-specific records; this parameter can take a comma separated list",
+                    "schema": {
+                        "type": "string"
+                    }
+                }, {
+                    "name": "fromDate",
+                    "in": "query",
+                    "description": "To retrieve the company records, which were updated on or after given date",
+                    "schema": {
+                        "type": "string"
+                    }
+                }, {
+                    "name": "toDate",
+                    "in": "query",
+                    "description": "To retrieve the company records, which were updated on or before the given date",
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A list of companies with subsidiaries and program info",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Companies"
+                                },
+                                "example": "<Companies xmlns=\"http://dint.arbfile.org/reference/v2\"> <Company id=\"2045130000\"> <Name>ALPHA INSURANCE CO</Name> <Active>true</Active> <Cocode>04513</Cocode> <LiabilityCoverage>true</LiabilityCoverage> <UpdatedDate>2024-02-13T16:43:30.000</UpdatedDate> <Subsidiary id=\"1045130002\"> <Name>ALPHA INSURANCE OF FLORIDA</Name> <Active>true</Active> <LiabilityCoverage>true</LiabilityCoverage> <UpdatedDate>2022-12-06T18:20:00.000</UpdatedDate> <Subsid>0002</Subsid> <TotalRecoverySolution> <Active>true</Active> <EffectiveDate>2017-01-17T00:00:00.000</EffectiveDate> </TotalRecoverySolution> <ArbPrograms> <Program> <Name>Automobile</Name> <Code>A</Code> <Active>true</Active> <ActiveDate>2006-01-01T00:00:00.000</ActiveDate> </Program> <Program> <Name>Medpay</Name> <Code>M</Code> <Active>true</Active> <ActiveDate>2006-01-01T00:00:00.000</ActiveDate> </Program> </ArbPrograms> </Subsidiary> </Company> </Companies>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/evidencetypes": {
+            "get": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "Get evidence types",
+                "description": "Get evidence types",
+                "operationId": "getEvidenceTypes",
+                "parameters": [{
+                    "name": "all",
+                    "in": "query",
+                    "description": "When set to “true”, the service will return all the records for the supported evidence \ntypes under all the domains.",
+                    "schema": {
+                        "enum": ["true", "false"],
+                        "type": "string"
+                    }
+                }, {
+                    "name": "domain",
+                    "in": "query",
+                    "description": "When setting the value to the valid domain name, the service will return all the \nrecords for the supported evidence types under the given domain.",
+                    "schema": {
+                        "enum": ["E-SUBROHUB", "DOCUMENT-SHARING", "TRS"],
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A list of evidence types",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EvidenceTypes"
+                                },
+                                "example": "<EvidenceTypes xmlns=\"http://dint.arbfile.org/reference/v1\"> <EvidenceType> <DomainType>DOCUMENT-SHARING</DomainType> <DocumentTypes> <DocumentType>Appraisal</DocumentType> <DocumentType>BillofLadings</DocumentType> <DocumentType>BriefofLaw</DocumentType> <DocumentType>Contract</DocumentType> <DocumentType>EmployeeStatement</DocumentType> <DocumentType>EngineerReport</DocumentType> <DocumentType>ExplanationofBenefits</DocumentType> <DocumentType>FireMarshallReport</DocumentType> <DocumentType>InterCompanyReimbursementNotificationForm</DocumentType> <DocumentType>InvestigativeReport</DocumentType> <DocumentType>ListofContents</DocumentType> <DocumentType>MedicalBills</DocumentType> <DocumentType>MedicalReports</DocumentType> <DocumentType>MedpayLedger</DocumentType> <DocumentType>NoticeofLien</DocumentType> <DocumentType>OriginAndCauseReport</DocumentType> <DocumentType>PIPApplication</DocumentType> <DocumentType>ProofofLitigationFiling</DocumentType> <DocumentType>ProofofLoss</DocumentType> <DocumentType>PurchaseInvoice</DocumentType> <DocumentType>ReleaseForm</DocumentType> <DocumentType>ShippingReportPostInspection</DocumentType> <DocumentType>ShippingReportPreInspection</DocumentType> <DocumentType>WageVerification</DocumentType> </DocumentTypes> </EvidenceType> <EvidenceType> <DomainType>OLF-AUTO</DomainType> <DocumentTypes> <DocumentType>AccidentReport</DocumentType> <DocumentType>AdjustersNotes</DocumentType> <DocumentType>ApplicantRecordedStatement</DocumentType> <DocumentType>ApplicantWrittenStatement</DocumentType> <DocumentType>BailmentForm</DocumentType> <DocumentType>CaseLaw</DocumentType> <DocumentType>CoverageDenialLetter</DocumentType> <DocumentType>ComputerizedVehicleRegistrationFee</DocumentType> <DocumentType>Deductible</DocumentType> <DocumentType>DenialLetter</DocumentType> <DocumentType>DiminishedValueDocumentation</DocumentType> <DocumentType>Estimate</DocumentType> <DocumentType>ExpertReport</DocumentType> <DocumentType>LossofUseProvision</DocumentType> <DocumentType>MotorVehicleAccidentReport</DocumentType> <DocumentType>Other</DocumentType> <DocumentType>PaymentHistory</DocumentType> <DocumentType>Photograph</DocumentType> <DocumentType>PoliceReport</DocumentType> <DocumentType>PolicyCancellationLetter</DocumentType> <DocumentType>PolicyDeclarations</DocumentType> <DocumentType>PolicyLanguage</DocumentType> <DocumentType>ProofofDamages</DocumentType> <DocumentType>ProofofPayment</DocumentType> <DocumentType>RentalAgreement</DocumentType> <DocumentType>RentalBillReceipt</DocumentType> <DocumentType>ReservationofRightsLetter</DocumentType> <DocumentType>RespondentRecordedStatement</DocumentType> <DocumentType>RespondentWrittenStatement</DocumentType> <DocumentType>RulesoftheRoad</DocumentType> <DocumentType>SalvageInvoice</DocumentType> <DocumentType>SalvageReport</DocumentType> <DocumentType>SceneDiagram</DocumentType> <DocumentType>ScenePhotograph</DocumentType> <DocumentType>Statement</DocumentType> <DocumentType>Statute</DocumentType> <DocumentType>SupplementPayments</DocumentType> <DocumentType>TotalLossEvaluation</DocumentType> <DocumentType>TowandorStorageBill</DocumentType> <DocumentType>VehicleDamagePhotos</DocumentType> <DocumentType>Video</DocumentType> <DocumentType>WitnessRecordedStatement</DocumentType> <DocumentType>WitnessWrittenStatement</DocumentType> <DocumentType>WrittenConsentLetter</DocumentType> </DocumentTypes> </EvidenceType> </EvidenceTypes>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mimetypes": {
+            "get": {
+                "summary": "Get supported mime types",
+                "description": "Returns a list of supported file types and their associated mime types.",
+                "operationId": "get-mimetypes",
+                "parameters": [{
+                    "name": "all",
+                    "in": "query",
+                    "description": "When set to \"true\", the service will return all the records for the supported MIME types.",
+                    "schema": {
+                        "enum": ["true"],
+                        "type": "string",
+                        "default": "true"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A list of supported mime types in XML format",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ContentTypes"
+                                },
+                                "example": "<ContentTypes xmlns=\"http://dint.arbfile.org/reference/v1\"> <FileType> <Type>image</Type> <Active>true</Active> <MaxSize>41943040</MaxSize> <MimeTypes> <MimeType>image/pjpeg</MimeType> <MimeType>image/tiff</MimeType> <MimeType>image/jpeg</MimeType> <MimeType>image/x-ms-bmp</MimeType> <MimeType>image/bmp</MimeType> <MimeType>image/png</MimeType> <MimeType>image/x-bmp</MimeType> <MimeType>image/tiff2</MimeType> <MimeType>image/pipeg</MimeType> <MimeType>image/gif</MimeType> <MimeType>image/x-png</MimeType> <MimeType>image/x-tif</MimeType> </MimeTypes> </FileType> <FileType> <Type>text</Type> <Active>true</Active> <MaxSize>41943040</MaxSize> <MimeTypes> <MimeType>application/vnd.openxmlformats-officedocument.presentationml.presentation</MimeType> <MimeType>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</MimeType> <MimeType>application/vnd.openxmlformats-officedocument.spreadsheetml.template</MimeType> <MimeType>application/vnd.ms-excel.addin.macroEnabled.12</MimeType> <MimeType>application/vnd.ms-excel.sheet.binary.macroEnabled.12</MimeType> <MimeType>application/vnd.ms-powerpoint</MimeType> <MimeType>application/msword</MimeType> <MimeType>application/vnd.ms-word.document.macroEnabled.12</MimeType> <MimeType>application/vnd.ms-powerpoint.addin.macroEnabled.12</MimeType> <MimeType>application/postscript</MimeType> <MimeType>text/plain</MimeType> <MimeType>application/vnd.ms-powerpoint.presentation.macroEnabled.12</MimeType> <MimeType>application/vnd.ms-excel.sheet.macroEnabled.12</MimeType> <MimeType>application/vnd.openxmlformats-officedocument.presentationml.template</MimeType> <MimeType>application/vnd.ms-works</MimeType> <MimeType>application/pdf</MimeType> <MimeType>application/vnd.openxmlformats-officedocument.wordprocessingml.document</MimeType> <MimeType>application/vnd.ms-excel.template.macroEnabled.12</MimeType> <MimeType>application/vnd.openxmlformats-officedocument.presentationml.slideshow</MimeType> <MimeType>text/html</MimeType> <MimeType>text/richtext</MimeType> <MimeType>application/vnd.ms-excel</MimeType> <MimeType>application/vnd.openxmlformats-officedocument.wordprocessingml.template</MimeType> </MimeTypes> </FileType> <FileType> <Type>video</Type> <Active>true</Active> <MaxSize>41943040</MaxSize> <MimeTypes> <MimeType>video/x-msvideo</MimeType> <MimeType>video/webm</MimeType> <MimeType>video/mp4</MimeType> <MimeType>video/avi</MimeType> <MimeType>video/dvd</MimeType> <MimeType>video/mpeg</MimeType> <MimeType>video/x-ms-wmv</MimeType> <MimeType>video/3gpp</MimeType> <MimeType>video/x-m4v</MimeType> <MimeType>video/mpeg4</MimeType> <MimeType>video/quicktime</MimeType> <MimeType>video/ogg</MimeType> </MimeTypes> </FileType> </ContentTypes>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sesCompanies": {
+            "get": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "Retrieve SES companies",
+                "description": "Returns a list of Settlement Exchange System companies with applications and subsidiaries.",
+                "operationId": "get-sescompanies",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SESCompanies"
+                                },
+                                "example": "<SESCompanies xmlns=\"http://dint.arbfile.org/reference/v1\"> <SESCompany> <Name>BETA INSURANCE CO</Name> <Cocode>04514</Cocode> <SESApplications> <SESApplication> <Name>ESH</Name> <EffectiveDate>2018-04-22T00:00:00.000</EffectiveDate> <ExpirationDate>9999-01-01T00:00:00.000</ExpirationDate> </SESApplication> </SESApplications> </SESCompany> </SESCompanies>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/demand/id/{DemandID}": {
+            "get": {
+                "summary": "Retrieve a demand by ID",
+                "description": "Retrieve a demand by ID",
+                "operationId": "getDemandById",
+                "parameters": [{
+                    "name": "DemandID",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "A detailed demand object with party, policy, and incident info",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Demand"
+                                },
+                                "example": "<af:Demand xmlns:af=\"http://dint.arbfile.org/standard/v1\"> <af:DemandId>527921</af:DemandId> <af:DemandStatus>Issued</af:DemandStatus> <af:CaseVersion>DhzHOb/Q0i6krwP2erP6Ow==</af:CaseVersion> <af:AssociatedDemands/> <af:Incident> <af:IncidentState>FL</af:IncidentState> <af:IncidentDate>2025-05-08</af:IncidentDate> </af:Incident> <af:DemandParties> <af:DemandParty> <af:Role>Demander</af:Role> <af:Company> <af:Cocode>04513</af:Cocode> <af:Subsid>0002</af:Subsid> <af:Name>ALPHA INSURANCE OF FLORIDA</af:Name> </af:Company> </af:DemandParty> <!-- additional DemandParty entries --> </af:DemandParties> <af:DemanderDetails> <af:ClaimPolicyNumber>sjr202505080206-alpha</af:ClaimPolicyNumber> <af:Remittance/> <af:Insured> <af:PersonName> <af:LastName>REECE</af:LastName> </af:PersonName> <af:Type>Personal</af:Type> <af:IsDriver>false</af:IsDriver> </af:Insured> <!-- additional DemanderDetails info --> </af:DemanderDetails> <!-- ResponderDetails, Negotiations, etc. --> </af:Demand>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/document/{DocumentID}/{MemberCocode}": {
+            "get": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "Get document details",
+                "description": "Get document details",
+                "operationId": "getDocumentById",
+                "parameters": [{
+                    "name": "DocumentID",
+                    "in": "path",
+                    "description": "Unique identifier for the document",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }, {
+                    "name": "MemberCocode",
+                    "in": "path",
+                    "description": "Member company code",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successful response returning document in binary."
+                    }
+                }
+            }
+        },
+        "/service": {
+            "post": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "ProcessCommand REST",
+                "description": "ProcessCommand REST",
+                "operationId": "processcommand-rest",
+                "requestBody": {
+                    "content": {
+                        "application/xml": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AFCommand"
+                            },
+                            "example": "<n1:AFCommand xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:doctv5=\"http://dint.arbfile.org/standard/types/doc/v5\" xmlns:n1=\"http://dint.arbfile.org/standard/commands/arb/v5\" xsi:schemaLocation=\"http://dint.arbfile.org/standard/commands/arb/v5 AFArbCommand.xsd\"> <n1:RequesterGuid>aaaaaaaaaaaaaaaa</n1:RequesterGuid> <n1:ArbitrationCommand> <n1:Source> <n1:HandlingCocode>04513</n1:HandlingCocode> <n1:SubjectCocode>04513</n1:SubjectCocode> <n1:SubjectClaimNumber>SJR202502180447-ALPHA</n1:SubjectClaimNumber> <n1:AFCaseId>A25000058E9-C1</n1:AFCaseId> </n1:Source> <n1:ArbAttachDocument> <n1:Documents> <doctv5:Document> <doctv5:ContentType>application/pdf</doctv5:ContentType> <doctv5:BinaryContent>UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi</doctv5:BinaryContent> <doctv5:OriginalFileName>test_file.pdf</doctv5:OriginalFileName> <doctv5:LogicalDocuments> <doctv5:LogicalDocument> <doctv5:DocumentType>Estimate</doctv5:DocumentType> <doctv5:DocumentDescription>a</doctv5:DocumentDescription> </doctv5:LogicalDocument> </doctv5:LogicalDocuments> </doctv5:Document> </n1:Documents> </n1:ArbAttachDocument> </n1:ArbitrationCommand> </n1:AFCommand>"
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful submission",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "xml": {
+                                                "prefix": "dtv5"
+                                            }
+                                        }
+                                    },
+                                    "xml": {
+                                        "name": "Response",
+                                        "namespace": "http://dint.arbfile.org/standard/types/domain/v5",
+                                        "prefix": "dtv5"
+                                    }
+                                },
+                                "example": "<dtv5:Response xmlns:dtv5=\"http://dint.arbfile.org/standard/types/domain/v5\"> <dtv5:status>200</dtv5:status> </dtv5:Response>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Demand": {
+                "type": "object",
+                "properties": {
+                    "DemandId": {
+                        "type": "string",
+                        "description": "Unique identifier for the demand",
+                        "xml": {
+                            "name": "DemandId"
+                        }
+                    },
+                    "DemandStatus": {
+                        "type": "string",
+                        "description": "Current status of the demand (e.g., Issued, Accepted)",
+                        "xml": {
+                            "name": "DemandStatus"
+                        }
+                    },
+                    "CaseVersion": {
+                        "type": "string",
+                        "description": "Version identifier for concurrency control",
+                        "xml": {
+                            "name": "CaseVersion"
+                        }
+                    },
+                    "AssociatedDemands": {
+                        "type": "string",
+                        "description": "List or references to related demands",
+                        "xml": {
+                            "name": "AssociatedDemands"
+                        }
+                    },
+                    "Incident": {
+                        "type": "object",
+                        "properties": {
+                            "IncidentState": {
+                                "type": "string",
+                                "description": "State in which the incident occurred",
+                                "xml": {
+                                    "name": "IncidentState"
+                                }
+                            },
+                            "IncidentDate": {
+                                "type": "string",
+                                "description": "Date when the incident happened",
+                                "xml": {
+                                    "name": "IncidentDate"
+                                }
+                            }
+                        },
+                        "description": "Information about the incident that led to the demand",
+                        "xml": {
+                            "name": "Incident"
+                        }
+                    },
+                    "DemandParties": {
+                        "type": "object",
+                        "properties": {
+                            "DemandParty": {
+                                "type": "object",
+                                "properties": {
+                                    "Role": {
+                                        "type": "string",
+                                        "description": "Role of the party (e.g., Demander, Responder)",
+                                        "xml": {
+                                            "name": "Role"
+                                        }
+                                    },
+                                    "Company": {
+                                        "type": "object",
+                                        "properties": {
+                                            "Cocode": {
+                                                "type": "string",
+                                                "description": "Company code",
+                                                "xml": {
+                                                    "name": "Cocode"
+                                                }
+                                            },
+                                            "Name": {
+                                                "type": "string",
+                                                "description": "Company or party name",
+                                                "xml": {
+                                                    "name": "Name"
+                                                }
+                                            }
+                                        },
+                                        "description": "Company details",
+                                        "xml": {
+                                            "name": "Company"
+                                        }
+                                    }
+                                },
+                                "description": "Details about one party in the demand",
+                                "xml": {
+                                    "name": "DemandParty"
+                                }
+                            }
+                        },
+                        "description": "List of parties involved in the demand",
+                        "xml": {
+                            "name": "DemandParties"
+                        }
+                    },
+                    "DemanderDetails": {
+                        "type": "object",
+                        "properties": {
+                            "ClaimPolicyNumber": {
+                                "type": "string",
+                                "description": "Policy number associated with the claim",
+                                "xml": {
+                                    "name": "ClaimPolicyNumber"
+                                }
+                            },
+                            "Remittance": {
+                                "type": "string",
+                                "description": "Remittance details for payment",
+                                "xml": {
+                                    "name": "Remittance"
+                                }
+                            },
+                            "Insured": {
+                                "type": "object",
+                                "properties": {
+                                    "PersonName": {
+                                        "type": "object",
+                                        "properties": {
+                                            "LastName": {
+                                                "type": "string",
+                                                "description": "Last name of the individual",
+                                                "xml": {
+                                                    "name": "LastName"
+                                                }
+                                            }
+                                        },
+                                        "description": "Name of the insured person",
+                                        "xml": {
+                                            "name": "PersonName"
+                                        }
+                                    },
+                                    "Type": {
+                                        "type": "string",
+                                        "description": "Type of party (e.g., Personal, Commercial)",
+                                        "xml": {
+                                            "name": "Type"
+                                        }
+                                    },
+                                    "IsDriver": {
+                                        "type": "string",
+                                        "description": "Whether the insured was the driver",
+                                        "xml": {
+                                            "name": "IsDriver"
+                                        }
+                                    }
+                                },
+                                "description": "Information about the insured party",
+                                "xml": {
+                                    "name": "Insured"
+                                }
+                            },
+                            "Driver": {
+                                "type": "object",
+                                "properties": {
+                                    "Bailment": {
+                                        "type": "string",
+                                        "description": "Indicates if bailment applies",
+                                        "xml": {
+                                            "name": "Bailment"
+                                        }
+                                    },
+                                    "Vehicle": {
+                                        "type": "object",
+                                        "properties": {
+                                            "Year": {
+                                                "type": "string",
+                                                "description": "Vehicle year",
+                                                "xml": {
+                                                    "name": "Year"
+                                                }
+                                            },
+                                            "Make": {
+                                                "type": "string",
+                                                "description": "Vehicle make",
+                                                "xml": {
+                                                    "name": "Make"
+                                                }
+                                            },
+                                            "Model": {
+                                                "type": "string",
+                                                "description": "Vehicle model",
+                                                "xml": {
+                                                    "name": "Model"
+                                                }
+                                            }
+                                        },
+                                        "description": "Vehicle information",
+                                        "xml": {
+                                            "name": "Vehicle"
+                                        }
+                                    }
+                                },
+                                "description": "Driver details",
+                                "xml": {
+                                    "name": "Driver"
+                                }
+                            },
+                            "RepresentativeContact": {
+                                "type": "object",
+                                "properties": {
+                                    "FullName": {
+                                        "type": "string",
+                                        "description": "Full name of the contact",
+                                        "xml": {
+                                            "name": "FullName"
+                                        }
+                                    },
+                                    "Address": {
+                                        "type": "object",
+                                        "properties": {
+                                            "Address1": {
+                                                "type": "string",
+                                                "description": "Street address line 1",
+                                                "xml": {
+                                                    "name": "Address1"
+                                                }
+                                            },
+                                            "Address2": {
+                                                "type": "string",
+                                                "description": "Street address line 2",
+                                                "xml": {
+                                                    "name": "Address2"
+                                                }
+                                            },
+                                            "City": {
+                                                "type": "string",
+                                                "description": "City of residence",
+                                                "xml": {
+                                                    "name": "City"
+                                                }
+                                            },
+                                            "State": {
+                                                "type": "string",
+                                                "description": "State of residence",
+                                                "xml": {
+                                                    "name": "State"
+                                                }
+                                            },
+                                            "Zip": {
+                                                "type": "string",
+                                                "description": "Postal code",
+                                                "xml": {
+                                                    "name": "Zip"
+                                                }
+                                            }
+                                        },
+                                        "description": "Address of the contact",
+                                        "xml": {
+                                            "name": "Address"
+                                        }
+                                    }
+                                },
+                                "description": "Contact information for representative",
+                                "xml": {
+                                    "name": "RepresentativeContact"
+                                }
+                            }
+                        },
+                        "description": "Details about the demander side of the claim",
+                        "xml": {
+                            "name": "DemanderDetails"
+                        }
+                    },
+                    "ResponderDetails": {
+                        "type": "object",
+                        "properties": {
+                            "ClaimPolicyNumber": {
+                                "type": "string",
+                                "description": "Policy number associated with the claim",
+                                "xml": {
+                                    "name": "ClaimPolicyNumber"
+                                }
+                            },
+                            "Insured": {
+                                "type": "object",
+                                "properties": {
+                                    "PersonName": {
+                                        "type": "object",
+                                        "properties": {
+                                            "LastName": {
+                                                "type": "string",
+                                                "description": "Last name of the individual",
+                                                "xml": {
+                                                    "name": "LastName"
+                                                }
+                                            }
+                                        },
+                                        "description": "Name of the insured person",
+                                        "xml": {
+                                            "name": "PersonName"
+                                        }
+                                    },
+                                    "Type": {
+                                        "type": "string",
+                                        "description": "Type of party (e.g., Personal, Commercial)",
+                                        "xml": {
+                                            "name": "Type"
+                                        }
+                                    },
+                                    "IsDriver": {
+                                        "type": "string",
+                                        "description": "Whether the insured was the driver",
+                                        "xml": {
+                                            "name": "IsDriver"
+                                        }
+                                    }
+                                },
+                                "description": "Information about the insured party",
+                                "xml": {
+                                    "name": "Insured"
+                                }
+                            },
+                            "Driver": {
+                                "type": "object",
+                                "properties": {
+                                    "Bailment": {
+                                        "type": "string",
+                                        "description": "Indicates if bailment applies",
+                                        "xml": {
+                                            "name": "Bailment"
+                                        }
+                                    }
+                                },
+                                "description": "Driver details",
+                                "xml": {
+                                    "name": "Driver"
+                                }
+                            },
+                            "RepresentativeContact": {
+                                "type": "object",
+                                "properties": {
+                                    "FullName": {
+                                        "type": "string",
+                                        "description": "Full name of the contact",
+                                        "xml": {
+                                            "name": "FullName"
+                                        }
+                                    },
+                                    "Address": {
+                                        "type": "object",
+                                        "properties": {
+                                            "Address1": {
+                                                "type": "string",
+                                                "description": "Street address line 1",
+                                                "xml": {
+                                                    "name": "Address1"
+                                                }
+                                            },
+                                            "Address2": {
+                                                "type": "string",
+                                                "description": "Street address line 2",
+                                                "xml": {
+                                                    "name": "Address2"
+                                                }
+                                            },
+                                            "City": {
+                                                "type": "string",
+                                                "description": "City of residence",
+                                                "xml": {
+                                                    "name": "City"
+                                                }
+                                            },
+                                            "State": {
+                                                "type": "string",
+                                                "description": "State of residence",
+                                                "xml": {
+                                                    "name": "State"
+                                                }
+                                            },
+                                            "Zip": {
+                                                "type": "string",
+                                                "description": "Postal code",
+                                                "xml": {
+                                                    "name": "Zip"
+                                                }
+                                            }
+                                        },
+                                        "description": "Address of the contact",
+                                        "xml": {
+                                            "name": "Address"
+                                        }
+                                    },
+                                    "Phone": {
+                                        "type": "string",
+                                        "description": "Phone number",
+                                        "xml": {
+                                            "name": "Phone"
+                                        }
+                                    }
+                                },
+                                "description": "Contact information for representative",
+                                "xml": {
+                                    "name": "RepresentativeContact"
+                                }
+                            }
+                        },
+                        "description": "Details about the responder side of the claim",
+                        "xml": {
+                            "name": "ResponderDetails"
+                        }
+                    },
+                    "Negotiations": {
+                        "type": "object",
+                        "properties": {
+                            "Negotiation": {
+                                "type": "object",
+                                "properties": {
+                                    "FromParty": {
+                                        "type": "string",
+                                        "description": "Initiator of the negotiation",
+                                        "xml": {
+                                            "name": "FromParty"
+                                        }
+                                    },
+                                    "ToParty": {
+                                        "type": "string",
+                                        "description": "Recipient of the negotiation",
+                                        "xml": {
+                                            "name": "ToParty"
+                                        }
+                                    },
+                                    "AutoDamages": {
+                                        "type": "string",
+                                        "description": "Damages related to the vehicle",
+                                        "xml": {
+                                            "name": "AutoDamages"
+                                        }
+                                    },
+                                    "RentalExpense": {
+                                        "type": "string",
+                                        "description": "Costs incurred for rental",
+                                        "xml": {
+                                            "name": "RentalExpense"
+                                        }
+                                    },
+                                    "TowingExpense": {
+                                        "type": "string",
+                                        "description": "Towing-related expenses",
+                                        "xml": {
+                                            "name": "TowingExpense"
+                                        }
+                                    },
+                                    "OtherExpense": {
+                                        "type": "string",
+                                        "description": "Other miscellaneous expenses",
+                                        "xml": {
+                                            "name": "OtherExpense"
+                                        }
+                                    },
+                                    "Deductible": {
+                                        "type": "string",
+                                        "description": "Amount deducted from payout",
+                                        "xml": {
+                                            "name": "Deductible"
+                                        }
+                                    },
+                                    "TotalLoss": {
+                                        "type": "string",
+                                        "description": "Indicates if the vehicle is a total loss",
+                                        "xml": {
+                                            "name": "TotalLoss"
+                                        }
+                                    },
+                                    "SalvageAmount": {
+                                        "type": "string",
+                                        "description": "Salvage value considered",
+                                        "xml": {
+                                            "name": "SalvageAmount"
+                                        }
+                                    },
+                                    "LiabilityPercent": {
+                                        "type": "string",
+                                        "description": "Percentage of liability admitted",
+                                        "xml": {
+                                            "name": "LiabilityPercent"
+                                        }
+                                    },
+                                    "DemandOverride": {
+                                        "type": "string",
+                                        "description": "If the demand was overridden",
+                                        "xml": {
+                                            "name": "DemandOverride"
+                                        }
+                                    },
+                                    "TotalDemand": {
+                                        "type": "string",
+                                        "description": "Total amount demanded",
+                                        "xml": {
+                                            "name": "TotalDemand"
+                                        }
+                                    },
+                                    "Message": {
+                                        "type": "string",
+                                        "description": "Message or notes related to the negotiation",
+                                        "xml": {
+                                            "name": "Message"
+                                        }
+                                    }
+                                },
+                                "description": "Individual negotiation record",
+                                "xml": {
+                                    "name": "Negotiation"
+                                }
+                            }
+                        },
+                        "description": "Negotiation history and status",
+                        "xml": {
+                            "name": "Negotiations"
+                        }
+                    },
+                    "AttachedDocuments": {
+                        "type": "string",
+                        "description": "Documents attached to the demand",
+                        "xml": {
+                            "name": "AttachedDocuments"
+                        }
+                    }
+                },
+                "description": "Object representation of a Demand.",
+                "xml": {
+                    "name": "Demand"
+                }
+            },
+            "EvidenceTypes": {
+                "type": "object",
+                "properties": {
+                    "EvidenceType": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EvidenceType"
+                        },
+                        "description": "Collection of EvidenceTypes (Occurs 1 - many)",
+                        "xml": {}
+                    }
+                },
+                "description": "Collection of Evidence Types",
+                "xml": {
+                    "name": "EvidenceTypes",
+                    "namespace": "http://dint.arbfile.org/reference/v1"
+                }
+            },
+            "EvidenceType": {
+                "type": "object",
+                "properties": {
+                    "DomainType": {
+                        "type": "string",
+                        "description": "Represents the domain type such as E-SUBROHUB, TRS, etc.",
+                        "xml": {
+                            "name": "DomainType"
+                        }
+                    },
+                    "DocumentTypes": {
+                        "$ref": "#/components/schemas/DocumentTypes"
+                    }
+                },
+                "description": "Collection of EvidenceTypes (Occurs 1 - many)",
+                "xml": {
+                    "name": "EvidenceType"
+                }
+            },
+            "DocumentTypes": {
+                "type": "object",
+                "properties": {
+                    "DocumentType": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Represents the domain type such as E-SUBROHUB, TRS, etc.",
+                        "xml": {
+                            "name": "DocumentType"
+                        }
+                    }
+                },
+                "description": "Collection of Document Types",
+                "xml": {
+                    "name": "DocumentTypes"
+                }
+            },
+            "Companies": {
+                "type": "object",
+                "properties": {
+                    "Company": {
+                        "$ref": "#/components/schemas/Company"
+                    }
+                },
+                "description": "Collection of Company Objects.",
+                "xml": {
+                    "name": "Companies"
+                }
+            },
+            "ContentTypes": {
+                "type": "object",
+                "properties": {
+                    "FileType": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FileType"
+                        },
+                        "description": "Collection of a File Types",
+                        "xml": {
+                            "name": "FileType",
+                            "wrapped": true
+                        }
+                    }
+                },
+                "description": "Collection of ContentTypes (Occurs 1 - many)",
+                "xml": {
+                    "name": "ContentTypes",
+                    "namespace": "http://dint.arbfile.org/reference/v1"
+                }
+            },
+            "FileType": {
+                "type": "object",
+                "properties": {
+                    "Type": {
+                        "type": "string",
+                        "description": "Represents the file type such as text, image, audio, and video.",
+                        "xml": {
+                            "name": "Type"
+                        }
+                    },
+                    "Active": {
+                        "type": "boolean",
+                        "description": "Indicates if the file type is active or inactive.",
+                        "xml": {
+                            "name": "Active"
+                        }
+                    },
+                    "MaxSize": {
+                        "type": "integer",
+                        "description": "Maximum size supported for particular file types in bytes.",
+                        "format": "int64",
+                        "xml": {
+                            "name": "MaxSize"
+                        }
+                    },
+                    "MimeTypes": {
+                        "$ref": "#/components/schemas/MimeTypes"
+                    }
+                },
+                "description": "Object representation of a File Type",
+                "xml": {
+                    "name": "FileType"
+                }
+            },
+            "MimeTypes": {
+                "type": "object",
+                "properties": {
+                    "MimeType": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Lists suppored MIME type, i.e., application/pdf",
+                        "xml": {
+                            "name": "MimeType",
+                            "wrapped": true
+                        }
+                    }
+                },
+                "description": "Collection of Mime Types (Occurs 1- many)",
+                "xml": {
+                    "name": "MimeTypes"
+                }
+            },
+            "SESCompanies": {
+                "type": "object",
+                "properties": {
+                    "SESCompany": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SESCompany"
+                        },
+                        "description": "The Settlement Exchange System Comapany's Name.",
+                        "xml": {
+                            "wrapped": true
+                        }
+                    }
+                },
+                "description": "Collection of Settlement Exchange System Companies",
+                "xml": {
+                    "name": "SESCompanies",
+                    "namespace": "http://dint.arbfile.org/reference/v1"
+                }
+            },
+            "SESApplications": {
+                "type": "object",
+                "properties": {
+                    "SESApplication": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SESApplication"
+                        },
+                        "description": "A Settlement Exchange System Application.",
+                        "xml": {
+                            "wrapped": true
+                        }
+                    }
+                },
+                "description": "Collection of Settlement Exchange System Applications.",
+                "xml": {
+                    "name": "SESApplications"
+                }
+            },
+            "SESSubsidiaries": {
+                "type": "object",
+                "properties": {
+                    "SESSubsidiary": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SESSubsidiary"
+                        },
+                        "description": "Object representation of a Settlement Exchange System Subsidiary",
+                        "xml": {
+                            "wrapped": true
+                        }
+                    }
+                },
+                "description": "Collection of Settlement Exchange System Subsidiaries",
+                "xml": {
+                    "name": "SESSubsidiaries"
+                }
+            },
+            "Company": {
+                "required": ["Name", "Cocode", "Active", "LiabilityCoverage"],
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "type": "string",
+                        "description": "This is the name of a company",
+                        "xml": {
+                            "name": "Name"
+                        }
+                    },
+                    "Active": {
+                        "type": "string",
+                        "description": "Indicates if the Company is active or inactive.",
+                        "xml": {
+                            "name": "Active"
+                        }
+                    },
+                    "Cocode": {
+                        "type": "string",
+                        "description": "A unique identifier that identifies the company (this field will eventually become obsolete)",
+                        "xml": {
+                            "name": "Cocode"
+                        }
+                    },
+                    "LiabilityCoverage": {
+                        "type": "string",
+                        "description": "A Boolean to determine if the company is set up to accept liability.",
+                        "xml": {
+                            "name": "LiabilityCoverage"
+                        }
+                    },
+                    "UpdatedDate": {
+                        "type": "string",
+                        "description": "The date the Subsidiary record was modified.",
+                        "xml": {
+                            "name": "UpdatedDate"
+                        }
+                    },
+                    "Subsidiary": {
+                        "$ref": "#/components/schemas/Subsidiary"
+                    }
+                },
+                "description": "Obj representation of a Company.",
+                "xml": {
+                    "name": "Company"
+                }
+            },
+            "SESCompany": {
+                "required": ["Name", "Cocode"],
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "type": "string",
+                        "description": "The Settlement Exchange System Comapany's Name.",
+                        "xml": {
+                            "name": "Name"
+                        }
+                    },
+                    "Cocode": {
+                        "type": "string",
+                        "description": "The requester company cocode.",
+                        "xml": {
+                            "name": "Cocode"
+                        }
+                    },
+                    "SESApplications": {
+                        "$ref": "#/components/schemas/SESApplications"
+                    },
+                    "SESSubsidiaries": {
+                        "$ref": "#/components/schemas/SESSubsidiaries"
+                    }
+                },
+                "description": "Object representation of a Settlement Exchange System Company.",
+                "xml": {
+                    "name": "SESCompany"
+                }
+            },
+            "SESApplication": {
+                "required": ["Name", "EffectiveDate", "ExpirationDate"],
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "type": "string",
+                        "description": "The name of the SES Application.",
+                        "xml": {
+                            "name": "Name"
+                        }
+                    },
+                    "EffectiveDate": {
+                        "type": "string",
+                        "description": "temp-placeholder",
+                        "format": "date-time",
+                        "xml": {
+                            "name": "EffectiveDate"
+                        }
+                    },
+                    "ExpirationDate": {
+                        "type": "string",
+                        "description": "temp-placeholder",
+                        "format": "date-time",
+                        "xml": {
+                            "name": "ExpirationDate"
+                        }
+                    }
+                },
+                "description": "A Settlement Exchange System Application.",
+                "xml": {
+                    "name": "SESApplication"
+                }
+            },
+            "SESSubsidiary": {
+                "required": ["Name", "Subsid"],
+                "type": "object",
+                "properties": {
+                    "Subsid": {
+                        "type": "string",
+                        "description": "An identifier that combined with the cocode identifies the subsidiary.",
+                        "xml": {
+                            "name": "Subsid"
+                        }
+                    },
+                    "Name": {
+                        "type": "string",
+                        "description": "The name of the Subsidiary.",
+                        "xml": {
+                            "name": "Name"
+                        }
+                    },
+                    "SESApplications": {
+                        "$ref": "#/components/schemas/SESApplications"
+                    }
+                },
+                "description": "Object representation of a Settlement Exchange System Subsidiary",
+                "xml": {
+                    "name": "SESSubsidiary"
+                }
+            },
+            "Subsidiary": {
+                "required": ["Name", "Active", "LiabilityCoverage", "Subsid"],
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "type": "string",
+                        "description": "This is the name of the Subsidiary.",
+                        "xml": {
+                            "name": "Name"
+                        }
+                    },
+                    "Active": {
+                        "type": "string",
+                        "description": "Indicates if the Subsidiary is active or inactive.",
+                        "xml": {
+                            "name": "Active"
+                        }
+                    },
+                    "LiabilityCoverage": {
+                        "type": "string",
+                        "description": "A Boolean to determine if the Subsidiary is set up to accept liability.",
+                        "xml": {
+                            "name": "LiabilityCoverage"
+                        }
+                    },
+                    "UpdatedDate": {
+                        "type": "string",
+                        "description": "The date the subsidiary record was modified.",
+                        "xml": {
+                            "name": "UpdatedDate"
+                        }
+                    },
+                    "Subsid": {
+                        "type": "string",
+                        "description": "An identifier that combined with the cocode identifies the subsidiary.",
+                        "xml": {
+                            "name": "Subsid"
+                        }
+                    },
+                    "ArbPrograms": {
+                        "type": "string",
+                        "xml": {
+                            "name": "ArbPrograms"
+                        }
+                    }
+                },
+                "description": "Obj representation of a Subsidiary.",
+                "xml": {
+                    "name": "Subsidiary"
+                }
+            },
+            "AFCommand": {
+                "type": "object",
+                "properties": {
+                    "RequesterGuid": {
+                        "type": "string",
+                        "description": "An identifier that is unique for the member.",
+                        "xml": {
+                            "prefix": "n1"
+                        }
+                    },
+                    "ArbitrationCommand": {
+                        "type": "object",
+                        "properties": {
+                            "Source": {
+                                "required": ["HandlingCocode", "SubjectCocode", "SubjectClaimNumber"],
+                                "type": "object",
+                                "properties": {
+                                    "HandlingCocode": {
+                                        "type": "string",
+                                        "description": "The identifier given to a third-party administrator (TPA) that identifies them to Arbitration Forums.",
+                                        "xml": {
+                                            "prefix": "n1"
+                                        }
+                                    },
+                                    "SubjectCocode": {
+                                        "type": "string",
+                                        "description": "The identifier given to the member that identifies them to Arbitration Forums.",
+                                        "xml": {
+                                            "prefix": "n1"
+                                        }
+                                    },
+                                    "SubjectClaimNumber": {
+                                        "type": "string",
+                                        "description": "The claim number that the demand is associate to.",
+                                        "xml": {
+                                            "prefix": "n1"
+                                        }
+                                    },
+                                    "AFCaseId": {
+                                        "type": "string",
+                                        "description": "Required if DocketNumber not specified",
+                                        "xml": {
+                                            "prefix": "n1"
+                                        }
+                                    }
+                                },
+                                "description": "An xml structure that contains the information about the member who is sending the command.",
+                                "xml": {
+                                    "prefix": "n1"
+                                }
+                            },
+                            "ArbAttachDocument": {
+                                "type": "object",
+                                "properties": {
+                                    "Documents": {
+                                        "type": "object",
+                                        "properties": {
+                                            "Document": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "ContentType": {
+                                                        "type": "string",
+                                                        "description": "Name of ContentType",
+                                                        "xml": {
+                                                            "prefix": "doctv5"
+                                                        }
+                                                    },
+                                                    "BinaryContent": {
+                                                        "type": "string",
+                                                        "description": "Required if FileName not specified.",
+                                                        "xml": {
+                                                            "prefix": "doctv5"
+                                                        }
+                                                    },
+                                                    "OriginalFileName": {
+                                                        "type": "string",
+                                                        "description": "Required if BinaryContent no specified.",
+                                                        "xml": {
+                                                            "prefix": "doctv5"
+                                                        }
+                                                    },
+                                                    "LogicalDocuments": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "LogicalDocument": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "DocumentType": {
+                                                                        "type": "string",
+                                                                        "description": "name of DocumentType",
+                                                                        "xml": {
+                                                                            "prefix": "doctv5"
+                                                                        }
+                                                                    },
+                                                                    "DocumentDescription": {
+                                                                        "type": "string",
+                                                                        "description": "Description of the Logical Document",
+                                                                        "xml": {
+                                                                            "prefix": "doctv5"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "xml": {
+                                                                    "prefix": "doctv5"
+                                                                }
+                                                            }
+                                                        },
+                                                        "xml": {
+                                                            "prefix": "doctv5"
+                                                        }
+                                                    }
+                                                },
+                                                "xml": {
+                                                    "namespace": "http://dint.arbfile.org/standard/types/doc/v5",
+                                                    "prefix": "doctv5"
+                                                }
+                                            }
+                                        },
+                                        "xml": {
+                                            "prefix": "n1"
+                                        }
+                                    }
+                                },
+                                "xml": {
+                                    "prefix": "n1"
+                                }
+                            }
+                        },
+                        "description": "A command used by the demander to initiate arbitration in the Total Recovery System (TRS) by using the details of a specific Demand Id in E-Subro Hub.",
+                        "xml": {
+                            "prefix": "n1"
+                        }
+                    }
+                },
+                "xml": {
+                    "name": "AFCommand",
+                    "namespace": "http://dint.arbfile.org/standard/commands/arb/v5",
+                    "prefix": "n1"
+                }
+            }
+        },
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            }
+        }
+    },
+    "security": [{
+        "basicAuth": []
+    }]
+}

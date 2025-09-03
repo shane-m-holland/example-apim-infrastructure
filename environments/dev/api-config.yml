@@ -1,0 +1,171 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Azure APIM API Deployment Configuration (YAML)
+# ──────────────────────────────────────────────────────────────────────────────
+# This configuration defines a list of APIs to be deployed to Azure API Management.
+# 
+# Supported Specification Formats:
+# - OpenAPI/Swagger (JSON or YAML): openapi+json, openapi
+# - SOAP/WSDL (XML): wsdl, wsdl-link
+#
+# Configuration supports environment variables using ${VARIABLE_NAME} syntax.
+# These are resolved at deployment time.
+#
+# Fields:
+# - apiId                (required): Unique identifier for the API in APIM
+# - displayName          (required): Friendly name shown in Azure Portal
+# - path                 (required): Public route prefix for the API
+# - specPath             (required): Path to the API specification file (OpenAPI/WSDL)
+# - format               (optional): Specification format (default: openapi+json)
+# - serviceUrl           (optional): Backend URL (can use env variables)
+# - protocols            (optional): List of protocols (default: [https])
+# - subscriptionRequired (optional): Whether subscription key is required (default: false)
+# - productIds           (optional): List of APIM product IDs for this API
+# - gatewayNames         (optional): Gateway names (default: [managed])
+# - tags                 (optional): Categorization tags
+# - apiDescription       (optional): Description shown in developer portal
+# - apiType              (optional): API type (http, soap, websocket, graphql)
+# - policies             (optional): API-level policy definitions
+#     - inbound, outbound, backend, on-error: Lists of policy rules
+#
+# Example:
+# - apiId: inventory-api
+#   displayName: Inventory Management API
+#   path: inventory
+#   specPath: ./specs/inventory-openapi.yaml
+#   format: openapi
+#   serviceUrl: ${INVENTORY_API_URL}
+#   protocols: [https]
+#   subscriptionRequired: true
+#   productIds: [unlimited]
+#   gatewayNames: [managed]
+#   tags: [inventory, warehouse]
+#   apiDescription: Inventory tracking API
+#   apiType: http
+#   policies:
+#     inbound:
+#       - type: rate-limit
+#         calls: 500
+#         renewal-period: 3600
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ─────────────────────────────────────────────
+# DEV01 Environment APIs
+# ─────────────────────────────────────────────
+
+# DEV01 - ESH Command V5 SOAP (SOAP)
+# ───────────────────────────────────
+- apiId: dev01-standard-v5-esh
+  displayName: DEV01 - ESH Command V5 SOAP
+  apiDescription: API specification of the command service associated with E-Subro
+    Hub for SOAP requests.
+  path: dev01/dint-soap-web/soap/standard/v5/subro/CommandService
+  format: wsdl
+  serviceUrl: https://dintdev01.arbfile.org/dint-soap-web/soap/standard/v5/subro/CommandService
+  specPath: ./specs/af-dev/command-service-esh.wsdl
+  protocols:
+  - https
+  apiType: soap
+  subscriptionRequired: false
+  tags:
+  - DEV
+  - Dev01
+  - ESH
+  - SOAP
+
+# DEV01 - SES Command V5 SOAP (SOAP)
+# ───────────────────────────────────
+- apiId: dev01-standard-v5-ses
+  displayName: DEV01 - SES Command V5 SOAP
+  apiDescription: API specification of the command service associated with Settlement
+    Exchange System for SOAP requests.
+  path: dev01/paysol-proxy-web/soap/standard/v5/CommandService
+  format: wsdl
+  serviceUrl: https://dintdev01.arbfile.org/paysol-proxy-web/soap/standard/v5/CommandService
+  specPath: ./specs/af-dev/command-service-ses.wsdl
+  protocols:
+  - https
+  apiType: soap
+  subscriptionRequired: false
+  tags:
+  - DEV
+  - Dev01
+  - SES
+  - SOAP
+
+# DEV01 - TRS Command V5 SOAP (SOAP)
+# ───────────────────────────────────
+- apiId: dev01-standard-v5-trs
+  displayName: DEV01 - TRS Command V5 SOAP
+  apiDescription: API specification of the command service associated with Settlement
+    Exchange System for SOAP requests.
+  path: dev01/dint-soap-web/soap/standard/v5/arb/CommandService
+  format: wsdl
+  serviceUrl: https://dintdev01.arbfile.org/dint-soap-web/soap/standard/v5/arb/CommandService
+  specPath: ./specs/af-dev/command-service-trs.wsdl
+  protocols:
+  - https
+  apiType: soap
+  subscriptionRequired: false
+  tags:
+  - DEV
+  - Dev01
+  - TRS
+  - SOAP
+
+# DEV01 - Information Request REST (HTTP)
+# ────────────────────────────────────────
+- apiId: dev01-information-request-rest
+  displayName: DEV01 - Information Request REST
+  apiDescription: REST API specifications for Information Retrieval.
+  path: dev01/dint-rest-web/rest/info
+  format: openapi
+  serviceUrl: https://dintdev01.arbfile.org/dint-rest-web/rest/
+  specPath: ./specs/af-dev/information-request.openapi.yml
+  protocols:
+  - https
+  apiType: http
+  subscriptionRequired: false
+  tags:
+  - DEV
+  - Dev01
+  - REST
+  - TRS
+  - ESH
+
+# DEV01 - Command Service REST (HTTP)
+# ────────────────────────────────────────
+- apiId: dev01-command-service-rest
+  displayName: DEV01 - Command Service REST
+  apiDescription: REST API specifications for Command Service.
+  path: dev01/dint-rest-web/rest/command
+  format: openapi
+  serviceUrl: https://dintdev01.arbfile.org/dint-rest-web/rest/
+  specPath: ./specs/af-dev/command-service.openapi.yml
+  protocols:
+  - https
+  apiType: http
+  subscriptionRequired: false
+  tags:
+  - DEV
+  - Dev01
+  - REST
+  - TRS
+  - ESH
+
+# DEV01 - Paysol Proxy Web REST (HTTP)
+# ─────────────────────────────────────
+- apiId: dev01-paysol-proxy-web-rest
+  displayName: DEV01 - Paysol Proxy Web REST
+  path: dev01/paysol-proxy-web/rest
+  format: openapi+json
+  serviceUrl: https://dintdev01.arbfile.org/paysol-proxy-web/rest
+  specPath: ./specs/af-dev/paysol-proxy.openapi.json
+  protocols:
+  - https
+  apiType: http
+  subscriptionRequired: false
+  tags:
+  - DEV
+  - Dev01
+  - SES
+  - REST

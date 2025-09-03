@@ -1,0 +1,56 @@
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:sescv5="http://dint.arbfile.org/standard/commands/ses/v5"
+    xmlns:dv5="http://dint.arbfile.org/standard/types/domain/v5"
+    xmlns="http://schemas.xmlsoap.org/wsdl/" name="CommandService"
+    targetNamespace="http://dint.arbfile.org/standard/commands/ses/v5">
+    <types>
+        <schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:sescv5="http://dint.arbfile.org/standard/commands/ses/v5"
+            xmlns:dv5="http://dint.arbfile.org/standard/types/domain/v5"
+            xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://dint.arbfile.org/standard/commands/ses/v5"
+                schemaLocation="https://dint.arbfile.org/paysol-proxy-web/xsd/standard/ng/commands/ses/v5/AFSesCommand.xsd" />
+            <import namespace="http://dint.arbfile.org/standard/types/domain/v5"
+                schemaLocation="https://dint.arbfile.org/paysol-proxy-web/xsd/standard/ng/types/domain/v5/AFDomain.xsd" />
+        </schema>
+    </types>
+    <message name="ProcessCommand">
+        <part element="sescv5:PaymentCommand" name="PaymentCommand"> </part>
+    </message>
+    <message name="ProcessCommandException">
+        <part element="dv5:FaultResponse" name="FaultResponse"> </part>
+    </message>
+    <message name="ProcessCommandResponse">
+        <part element="dv5:Response" name="Response"> </part>
+    </message>
+    <portType name="StandardV5SesServiceBean">
+        <operation name="ProcessCommand">
+            <input message="sescv5:ProcessCommand"> </input>
+            <output message="sescv5:ProcessCommandResponse"> </output>
+            <fault message="sescv5:ProcessCommandException" name="ProcessCommandException"> </fault>
+        </operation>
+    </portType>
+    <binding name="StandardV5SesServiceSoapBinding" type="sescv5:StandardV5SesServiceBean">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="ProcessCommand">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="ProcessCommandException">
+                <soap:fault name="ProcessCommandException" use="literal" />
+            </fault>
+        </operation>
+    </binding>
+    <service name="StandardV5SesService">
+        <port binding="sescv5:StandardV5SesServiceSoapBinding" name="StandardV5SesServicePort">
+            <soap:address
+                location="https://dint.arbfile.org/paysol-proxy-web/soap/standard/v5/CommandService" />
+        </port>
+    </service>
+</definitions>

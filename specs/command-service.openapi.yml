@@ -1,0 +1,2505 @@
+openapi: 3.0.3
+info:
+  title: Command Service (REST)
+  version: 1.0.0
+  description: 'API generated from XSD schema: http://dint.arbfile.org/standard/v4'
+paths:
+  "/service":
+    post:
+      tags:
+      - Dev
+      - Dev01
+      - REST
+      summary: ProcessCommand REST
+      description: ProcessCommand REST
+      operationId: processcommand-rest
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              "$ref": "#/components/schemas/AFCommand"
+            examples:
+              AcceptDemand: 
+                summary: A Command from either party accepting the Demand or negotiation amount
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-001</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0001</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:AcceptDemand>
+                              <n1:Role>Responder</n1:Role>
+                              <n1:Message>We agree to the demand terms.</n1:Message>
+                          </n1:AcceptDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              AddFYIMessage: 
+                summary: A Command which allows either party to add an informative message to a claim.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-002</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0002</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:AddFYIMessage>
+                              <n1:Role>Demander</n1:Role>
+                              <n1:Message>FYI: Additional documents will be uploaded later today.</n1:Message>
+                          </n1:AddFYIMessage>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              AddPayment: 
+                summary: A Command from the Demander to add a payment
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-003</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0003</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:AddPayment>
+                              <n1:Payment>
+                                  <n1:PaymentAmount>2500.00</n1:PaymentAmount>
+                                  <n1:GLAcctReference>SUBRO-GL-123</n1:GLAcctReference>
+                                  <n1:CheckNumber>CHK-98765</n1:CheckNumber>
+                                  <n1:CheckReceivedDate>2025-07-24</n1:CheckReceivedDate>
+                                  <n1:Comment>Initial settlement payment</n1:Comment>
+                              </n1:Payment>
+                          </n1:AddPayment>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              AddPrivateNote: 
+                summary: A Command which allows either party to add a private note to a claim.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-004</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0004</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:AddPrivateNote>
+                              <n1:Role>Demander</n1:Role>
+                              <n1:Message>Internal note - do not disclose to the responder.</n1:Message>
+                          </n1:AddPrivateNote>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              CloseDemand: 
+                summary: A Command from the Demander to close the demand
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-005</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0005</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:CloseDemand>
+                              <n1:Message>Demand settled and payment received.</n1:Message>
+
+                              <n1:CloseDetail>
+                                  <n1:CloseType>Settled</n1:CloseType>
+                                  <n1:Resolved>true</n1:Resolved>
+                              </n1:CloseDetail>
+
+                              <n1:Payment>
+                                  <n1:PaymentAmount>2500.00</n1:PaymentAmount>
+                                  <n1:CheckNumber>CHK-98766</n1:CheckNumber>
+                                  <n1:CheckReceivedDate>2025-07-25</n1:CheckReceivedDate>
+                                  <n1:Comment>Final settlement payment</n1:Comment>
+                              </n1:Payment>
+                          </n1:CloseDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              CorrectDemand: 
+                summary: A Command from the Demander to correct the damages
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-006</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0006</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:CorrectDemand>
+                              <n1:Damages>
+                                  <!-- one of AutoDamages | Comprehensive may appear (both optional) -->
+                                  <n1:AutoDamages>1500.00</n1:AutoDamages>
+
+                                  <!-- optional expense line items -->
+                                  <n1:RentalExpense>300.00</n1:RentalExpense>
+                                  <n1:TowingExpense>0.00</n1:TowingExpense>
+
+                                  <!-- deductible, salvage, total-loss flag—all optional -->
+                                  <n1:Deductible>250.00</n1:Deductible>
+                                  <n1:TotalLoss>false</n1:TotalLoss>
+
+                                  <!-- required fields -->
+                                  <n1:TotalDemand>1550.00</n1:TotalDemand>
+                                  <n1:Message>Updated damages to include rental expense and deductible correction.</n1:Message>
+                              </n1:Damages>
+                          </n1:CorrectDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              CounterOffer: 
+                summary: This command will take in a CounterRequest object.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-007</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0007</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <n1:CounterOffer>
+                              <n1:Role>Responder</n1:Role>
+
+                              <n1:Damages>
+                                  <!-- choice: AutoDamages or Comprehensive (both optional); one shown here -->
+                                  <n1:AutoDamages>1500.00</n1:AutoDamages>
+
+                                  <!-- optional expense items -->
+                                  <n1:RentalExpense>200.00</n1:RentalExpense>
+
+                                  <!-- required fields -->
+                                  <n1:Deductible>250.00</n1:Deductible>
+                                  <n1:LiabilityPercent>50</n1:LiabilityPercent>
+                                  <n1:TotalDemand>1950.00</n1:TotalDemand>
+                                  <n1:Message>We propose a 50 % liability split and updated damages.</n1:Message>
+
+                                  <!-- optional flags -->
+                                  <n1:AdmitLiability>true</n1:AdmitLiability>
+                              </n1:Damages>
+                          </n1:CounterOffer>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              CreateDemand: 
+                summary: The CreateDemand command creates but does not issue the specified Demand.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-008</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!--——————————————————  DEMAND IDENTIFIERS  ——————————————————-->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0008</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!--——————————————————  THE NEW DEMAND  ——————————————————-->
+                          <n1:CreateDemand>
+                              <!-- optional but often supplied -->
+                              <n1:LossType>Collision</n1:LossType>
+
+                              <!-- required -->
+                              <n1:Incident>
+                                  <n1:IncidentState>FL</n1:IncidentState>
+                                  <n1:IncidentDate>2025-06-15</n1:IncidentDate>
+                              </n1:Incident>
+
+                              <!-- optional - shown here for completeness -->
+                              <n1:ResponderParty>
+                                  <n1:Cocode>CCC789</n1:Cocode>
+                                  <n1:CompanyName>Sample Responder Insurance Co.</n1:CompanyName>
+                              </n1:ResponderParty>
+
+                              <!-- required -->
+                              <n1:DemanderDetails>
+                                  <n1:ClaimNumber>DN-123456</n1:ClaimNumber>
+
+                                  <n1:Insured>
+                                      <n1:PersonName>
+                                          <n1:FirstName>John</n1:FirstName>
+                                          <n1:LastName>Doe</n1:LastName>
+                                      </n1:PersonName>
+                                      <n1:Type>Personal</n1:Type>
+                                      <n1:IsDriver>true</n1:IsDriver>
+                                  </n1:Insured>
+                              </n1:DemanderDetails>
+
+                              <!-- optional but commonly present -->
+                              <n1:Damages>
+                                  <!-- choose AutoDamages *or* Comprehensive (both optional) -->
+                                  <n1:AutoDamages>1500.00</n1:AutoDamages>
+
+                                  <n1:RentalExpense>300.00</n1:RentalExpense>
+                                  <n1:TowingExpense>0.00</n1:TowingExpense>
+
+                                  <n1:Deductible>250.00</n1:Deductible>
+                                  <n1:TotalLoss>false</n1:TotalLoss>
+
+                                  <n1:LiabilityPercent>100</n1:LiabilityPercent>
+                                  <n1:TotalDemand>1550.00</n1:TotalDemand>
+
+                                  <n1:Message>Initial demand creation with estimated damages.</n1:Message>
+                              </n1:Damages>
+                          </n1:CreateDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              CreateIssueDemand: 
+                summary: Issue the specified Demand.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <!-- Correlates this request on your side -->
+                      <n1:RequesterGuid>req-009</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!---------------------------  DEMAND IDENTIFIERS  --------------------------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0009</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!---------------------------  ISSUE DEMAND  --------------------------->
+                          <n1:CreateIssueDemand>
+                              <!-- 0‥1 - shown with one AssociatedDemand inside -->
+                              <n1:AssociatedDemands>
+                                  <n1:AssociatedDemand>
+                                      <n1:AssociatedDemandType>Companion</n1:AssociatedDemandType>
+                                      <n1:DemandId>D-123450</n1:DemandId>
+                                  </n1:AssociatedDemand>
+                              </n1:AssociatedDemands>
+
+                              <!-- optional but often helpful -->
+                              <n1:LossType>Collision</n1:LossType>
+
+                              <!-- required block -->
+                              <n1:Incident>
+                                  <n1:IncidentState>TX</n1:IncidentState>
+                                  <n1:IncidentLocation>IH-35 &amp; FM-620</n1:IncidentLocation>
+                                  <n1:IncidentCity>Austin</n1:IncidentCity>
+                                  <n1:IncidentDate>2025-05-30</n1:IncidentDate>
+                              </n1:Incident>
+
+                              <!-- required - the company that will receive the issue demand -->
+                              <n1:ResponderParty>
+                                  <n1:Cocode>CCC789</n1:Cocode>
+                                  <n1:Subsid>01</n1:Subsid>
+                              </n1:ResponderParty>
+
+                              <!-- required - details about the demanding party -->
+                              <n1:DemanderDetails>
+                                  <n1:ClaimNumber>DN-987654</n1:ClaimNumber>
+                                  <n1:LossFacts>Insured rear-ended responder's vehicle at traffic light.</n1:LossFacts>
+                                  <n1:Insured>
+                                      <n1:PersonName>
+                                          <n1:FirstName>Jane</n1:FirstName>
+                                          <n1:LastName>Smith</n1:LastName>
+                                      </n1:PersonName>
+                                      <n1:Type>Personal</n1:Type>
+                                      <n1:IsDriver>true</n1:IsDriver>
+                                  </n1:Insured>
+                              </n1:DemanderDetails>
+
+                              <!-- required - responder's details -->
+                              <n1:ResponderDetails>
+                                  <n1:ClaimNumber>RS-432198</n1:ClaimNumber>
+                                  <n1:Insured>
+                                      <n1:Company>
+                                          <n1:CompanyName>Responder Trucking LLC</n1:CompanyName>
+                                      </n1:Company>
+                                      <n1:Type>Commercial</n1:Type>
+                                  </n1:Insured>
+                              </n1:ResponderDetails>
+
+                              <!-- required - monetary section -->
+                              <n1:Damages>
+                                  <!-- choose one branch (AutoDamages vs. Comprehensive); auto shown -->
+                                  <n1:AutoDamages>4500.00</n1:AutoDamages>
+
+                                  <n1:RentalExpense>600.00</n1:RentalExpense>
+                                  <n1:Deductible>500.00</n1:Deductible>
+                                  <n1:TotalLoss>false</n1:TotalLoss>
+
+                                  <!-- liability and total demand are mandatory -->
+                                  <n1:LiabilityPercent>75</n1:LiabilityPercent>
+                                  <n1:TotalDemand>4600.00</n1:TotalDemand>
+
+                                  <!-- required narrative -->
+                                  <n1:Message>Issuing demand for additional damages uncovered post-inspection.</n1:Message>
+                              </n1:Damages>
+
+                              <!-- optional supporting docs list omitted for brevity -->
+                          </n1:CreateIssueDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              DenyDemand: 
+                summary: Notify that the Demand has been denied.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-010</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!------- demand identifiers ------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0010</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!------- the DenyDemand command ------->
+                          <n1:DenyDemand>
+                              <!-- required -->
+                              <n1:Message>Based on the police report, we deny liability for this loss.</n1:Message>
+
+                              <!-- optional (include when applicable) -->
+                              <n1:DenialType>NoLiability</n1:DenialType>
+                          </n1:DenyDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              InitiateArbitration: 
+                summary: Initiate Arbitration for the specified Demand.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <!-- Client-side correlation -->
+                      <n1:RequesterGuid>req-011</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!----------------  DEMAND IDENTIFIERS  ---------------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0011</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!----------------  INITIATE ARBITRATION  ---------------->
+                          <n1:InitiateArbitration>
+                              <!-- only required field according to Complete.xsd -->
+                              <n1:DemandId>123456</n1:DemandId>
+                          </n1:InitiateArbitration>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              PendDemand: 
+                summary: Notify that the Demand is pending investigation.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-012</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!------- demand identifiers ------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0012</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!------- PendDemand command ------->
+                          <n1:PendDemand>
+                              <!-- required free-form explanation -->
+                              <n1:Message>
+                                  Demand placed in FNOL queue pending police report and initial liability review.
+                              </n1:Message>
+
+                              <!-- required enumeration:  FNOL | Investigate -->
+                              <n1:PendingType>FNOL</n1:PendingType>
+                          </n1:PendDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              Ping: 
+                summary: The Ping command to run access to the system.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-013</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!-- demand identifiers -->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0013</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!-- Ping command (only optional CheckStatus element) -->
+                          <n1:Ping>
+                              <n1:CheckStatus>true</n1:CheckStatus>
+                          </n1:Ping>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              ReducePayment: 
+                summary: Command to reduce Damages.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-014</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!------- demand identifiers ------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0014</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!------- ReducePayment command ------->
+                          <n1:ReducePayment>
+                              <n1:Damages>
+                                  <!-- choice: AutoDamages or Comprehensive (either/both optional) -->
+                                  <n1:AutoDamages>1500.00</n1:AutoDamages>
+
+                                  <!-- optional expense items -->
+                                  <n1:RentalExpense>200.00</n1:RentalExpense>
+                                  <n1:Deductible>250.00</n1:Deductible>
+                              </n1:Damages>
+
+                              <!-- required -->
+                              <n1:LiabilityPercent>60</n1:LiabilityPercent>
+
+                              <!-- optional -->
+                              <n1:AdmitLiability>true</n1:AdmitLiability>
+
+                              <!-- required -->
+                              <n1:Message>
+                                  We are reducing the prior payment based on updated appraisal and
+                                  policy-limit considerations.
+                              </n1:Message>
+
+                              <!-- optional CurrentOffer block -->
+                              <n1:CurrentOffer>
+                                  <n1:Amount>500.00</n1:Amount>
+                                  <n1:DemandOverrideReason>PolicyLimit</n1:DemandOverrideReason>
+                              </n1:CurrentOffer>
+
+                              <!-- optional flag -->
+                              <n1:CancelPriorReducedPayment>false</n1:CancelPriorReducedPayment>
+                          </n1:ReducePayment>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              Reject: 
+                summary: Notify the AF system that the event has been rejected.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-015</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!------ demand identifiers ------>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0015</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!------ Reject command ------>
+                          <n1:Reject>
+                              <n1:RejectDemand/>
+                              <!--  -- OR --
+                              <n1:DemandPackage/>
+                              -->
+                          </n1:Reject>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              ReplyToRequestForInfo: 
+                summary: A Command to reply with a message to a request for information.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-016</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!------------ demand identifiers ------------>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0016</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!------------ ReplyToRequestForInfo ------------>
+                          <n1:ReplyToRequestForInfo>
+                              <!-- required -->
+                              <n1:Role>Responder</n1:Role>
+                              <n1:Message>
+                                  Attached are the police photographs you requested.  
+                                  Please confirm receipt and let us know if anything else is needed.
+                              </n1:Message>
+
+                              <!-- optional; omit if you do NOT wish to auto-close the info request -->
+                              <n1:MarkRequestAsCompleted>true</n1:MarkRequestAsCompleted>
+                          </n1:ReplyToRequestForInfo>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              RequestInformation: 
+                summary: A Command from either party to request information 
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-017</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!------ demand identifiers ------>
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0017</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!------ RequestInformation command ------>
+                          <n1:RequestInformation>
+                              <n1:Role>Demander</n1:Role>
+                              <n1:Message>
+                                  Please provide a copy of the final police accident report and any
+                                  photographs taken at the scene.
+                              </n1:Message>
+                          </n1:RequestInformation>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              SettleDemand: 
+                summary: A Command from the Demander to manually settle the Demand
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-018</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!----------- demand identifiers ----------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0018</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!----------- SettleDemand command ----------->
+                          <n1:SettleDemand>
+                              <!-- required Damages block -->
+                              <n1:Damages>
+                                  <!-- one of AutoDamages | Comprehensive (either/both optional) -->
+                                  <n1:AutoDamages>4 500.00</n1:AutoDamages>
+
+                                  <!-- optional expense items -->
+                                  <n1:RentalExpense>600.00</n1:RentalExpense>
+                                  <n1:Deductible>500.00</n1:Deductible>
+
+                                  <!-- liability & total demand are **required** -->
+                                  <n1:LiabilityPercent>100</n1:LiabilityPercent>
+                                  <n1:TotalDemand>5 600.00</n1:TotalDemand>
+
+                                  <!-- required narrative -->
+                                  <n1:Message>Demand settled in full; payment details below.</n1:Message>
+                              </n1:Damages>
+
+                              <!-- optional closing information -->
+                              <n1:CloseDetail>
+                                  <n1:CloseType>Settled</n1:CloseType>
+                                  <n1:Resolved>true</n1:Resolved>
+                              </n1:CloseDetail>
+
+                              <!-- optional single payment record -->
+                              <n1:Payment>
+                                  <n1:PaymentAmount>5 600.00</n1:PaymentAmount>
+                                  <n1:CheckNumber>CHK-123456</n1:CheckNumber>
+                                  <n1:CheckReceivedDate>2025-07-25</n1:CheckReceivedDate>
+                                  <n1:Comment>Final settlement payment</n1:Comment>
+                              </n1:Payment>
+                          </n1:SettleDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              SubroAttachDocument: 
+                summary: The SubroAttachDocument associates evidence-related documents to a Demand based on the specified claimNumber.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-019</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!--------------  demand identifiers  -------------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0019</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!--------------  SubroAttachDocument  -------------->
+                          <n1:SubroAttachDocument>
+                              <!-- required -->
+                              <n1:IsPreprocess>false</n1:IsPreprocess>
+
+                              <!-- required container -->
+                              <n1:Documents>
+                                  <!-- at least one Document -->
+                                  <n1:Document>
+                                      <!-- required metadata -->
+                                      <n1:ContentType>application/pdf</n1:ContentType>
+                                      <n1:BinaryContent>UEsDBBQABgAIAAAAI… (base-64 data) …</n1:BinaryContent>
+                                      <n1:FileName>repair-invoice.pdf</n1:FileName>
+                                      <!-- optional original file name -->
+                                      <n1:OriginalFileName>invoice_scanned.pdf</n1:OriginalFileName>
+                                      <n1:IsPublic>true</n1:IsPublic>
+
+                                      <!-- required LogicalDocuments list -->
+                                      <n1:LogicalDocuments>
+                                          <n1:LogicalDocument>
+                                              <n1:DocumentType>Invoice</n1:DocumentType>
+                                              <n1:DocumentDescription>
+                                                  Body-shop invoice supporting auto-damage amount.
+                                              </n1:DocumentDescription>
+                                          </n1:LogicalDocument>
+                                      </n1:LogicalDocuments>
+                                  </n1:Document>
+                              </n1:Documents>
+                          </n1:SubroAttachDocument>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              SupplementDemand: 
+                summary: Files a supplement against the specified Demand.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-020</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!---------- demand identifiers ---------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0020</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!---------- SupplementDemand command ---------->
+                          <n1:SupplementDemand>
+                              <!-- required: has the demand now been resolved? -->
+                              <n1:Resolved>false</n1:Resolved>
+
+                              <!-- required Damages block -->
+                              <n1:Damages>
+                                  <!-- choice: AutoDamages or Comprehensive (either/or, both optional) -->
+                                  <n1:AutoDamages>1250.00</n1:AutoDamages>
+
+                                  <!-- optional individual expense lines -->
+                                  <n1:RentalExpense>180.00</n1:RentalExpense>
+                                  <!-- <n1:TowingExpense>…</n1:TowingExpense> -->
+                                  <!-- <n1:OtherExpense>…</n1:OtherExpense> -->
+
+                                  <!-- required deductible & total-loss flag -->
+                                  <n1:Deductible>250.00</n1:Deductible>
+                                  <n1:TotalLoss>false</n1:TotalLoss>
+
+                                  <!-- optional salvage amount -->
+                                  <!-- <n1:SalvageAmount>0.00</n1:SalvageAmount> -->
+
+                                  <!-- required liability % and total demand narrative -->
+                                  <n1:LiabilityPercent>100</n1:LiabilityPercent>
+                                  <n1:Message>
+                                      Additional rental expense incurred while vehicle was in body shop;
+                                      deductible and damages adjusted accordingly.
+                                  </n1:Message>
+                              </n1:Damages>
+                          </n1:SupplementDemand>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              UpdateDemandDetails: 
+                summary: A Command to update the demand details
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <!-- client-side correlation -->
+                      <n1:RequesterGuid>req-021</n1:RequesterGuid>
+
+                      <n1:SubrogationCommand>
+                          <!-------------- demand identifiers -------------->
+                          <n1:Source>
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <n1:SubjectClaimNumber>CLM-0021</n1:SubjectClaimNumber>
+                          </n1:Source>
+
+                          <!-------------- UpdateDemandDetails -------------->
+                          <n1:UpdateDemandDetails>
+                              <!-- REQUIRED -->
+                              <n1:Role>Demander</n1:Role>
+
+                              <!-- OPTIONAL - updated incident facts -->
+                              <n1:Incident>
+                                  <n1:IncidentState>CA</n1:IncidentState>
+                                  <n1:IncidentLocation>I-405 &amp; Culver Dr.</n1:IncidentLocation>
+                                  <n1:IncidentCity>Irvine</n1:IncidentCity>
+                                  <n1:IncidentDate>2025-06-05</n1:IncidentDate>
+                              </n1:Incident>
+
+                              <!-- OPTIONAL - company contacts now assigned -->
+                              <n1:DemanderParty>
+                                  <n1:CompanyCaseId>DMD-CASE-789</n1:CompanyCaseId>
+                                  <n1:Company>
+                                      <n1:Cocode>AAA123</n1:Cocode>
+                                      <n1:CompanyName>Alpha Mutual Ins.</n1:CompanyName>
+                                  </n1:Company>
+                              </n1:DemanderParty>
+
+                              <n1:ResponderParty>
+                                  <n1:CompanyCaseId>RSP-CASE-456</n1:CompanyCaseId>
+                                  <n1:Company>
+                                      <n1:Cocode>CCC789</n1:Cocode>
+                                      <n1:CompanyName>Capstone Casualty Co.</n1:CompanyName>
+                                  </n1:Company>
+                              </n1:ResponderParty>
+
+                              <!-- OPTIONAL - richer demand-side details -->
+                              <n1:DemanderDetails>
+                                  <n1:ClaimNumber>DN-654321</n1:ClaimNumber>
+                                  <n1:PolicyNumber>POL-555666</n1:PolicyNumber>
+                                  <n1:InternalReference>SUB-INT-REF-01</n1:InternalReference>
+                                  <n1:LossFacts>
+                                      Updated loss facts after independent appraisal: front-end impact
+                                      confirmed, no contributory negligence found.
+                                  </n1:LossFacts>
+                                  <n1:Insured>
+                                      <n1:PersonName>
+                                          <n1:FirstName>Jane</n1:FirstName>
+                                          <n1:LastName>Smith</n1:LastName>
+                                      </n1:PersonName>
+                                      <n1:Type>Personal</n1:Type>
+                                      <n1:IsDriver>true</n1:IsDriver>
+                                  </n1:Insured>
+                                  <n1:RepresentativeContact>
+                                      <n1:ContactName>Luke Andrews</n1:ContactName>
+                                      <n1:ContactPhone>555-123-7890</n1:ContactPhone>
+                                      <n1:ContactEmail>luke.andrews@example.com</n1:ContactEmail>
+                                  </n1:RepresentativeContact>
+                              </n1:DemanderDetails>
+
+                              <!-- OPTIONAL - updated responder-side details -->
+                              <n1:ResponderDetails>
+                                  <n1:ClaimNumber>RS-987654</n1:ClaimNumber>
+                                  <n1:PolicyNumber>POL-999888</n1:PolicyNumber>
+                                  <n1:InternalReference>RESP-REF-02</n1:InternalReference>
+                                  <n1:Insured>
+                                      <n1:Company>Responder Trucking LLC</n1:Company>
+                                      <n1:Type>Commercial</n1:Type>
+                                      <n1:IsDriver>false</n1:IsDriver>
+                                      <n1:LineOfInsurance>AutoLiability</n1:LineOfInsurance>
+                                  </n1:Insured>
+                                  <n1:RepresentativeContact>
+                                      <n1:ContactName>Maria Gomez</n1:ContactName>
+                                      <n1:ContactPhone>555-987-6543</n1:ContactPhone>
+                                      <n1:ContactEmail>maria.gomez@capstonecasualty.com</n1:ContactEmail>
+                                  </n1:RepresentativeContact>
+                              </n1:ResponderDetails>
+                          </n1:UpdateDemandDetails>
+                      </n1:SubrogationCommand>
+                  </n1:AFCommand>
+              ArbAttachDocument: 
+                summary: The ArbAttachDocument associates Evidence-related documents to a Docket based on the specified ClaimNumber.
+                value: |
+                  <n1:AFCommand xmlns:n1="http://dint.arbfile.org/standard/commands/arb/v5">
+                      <n1:RequesterGuid>req-022</n1:RequesterGuid>
+
+                      <n1:ArbitrationCommand>
+                          <!------------- ArbitrationSource (per XSD) ------------->
+                          <n1:Source>
+                              <!-- required handling company -->
+                              <n1:HandlingCocode>AAA123</n1:HandlingCocode>
+                              <!-- optional subsidiary code -->
+                              <n1:HandlingSubsid>01</n1:HandlingSubsid>
+
+                              <!-- required subject company -->
+                              <n1:SubjectCocode>BBB456</n1:SubjectCocode>
+                              <!-- optional subsidiary code -->
+                              <n1:SubjectSubsid>02</n1:SubjectSubsid>
+
+                              <!-- required claim number for the subject company -->
+                              <n1:SubjectClaimNumber>CLM-AR-0001</n1:SubjectClaimNumber>
+
+                              <!-- choice: include either DocketNumber *or* AFCaseId -->
+                              <n1:DocketNumber>DCK-2025-00123</n1:DocketNumber>
+                              <!-- <n1:AFCaseId>AF-7654321</n1:AFCaseId> -->
+                          </n1:Source>
+
+                          <!------------- ArbAttachDocument command ------------->
+                          <n1:ArbAttachDocument>
+                              <n1:Documents>
+                                  <n1:Document>
+                                      <n1:ContentType>application/pdf</n1:ContentType>
+
+                                      <!-- choose ONE of BinaryContent or FileName -->
+                                      <n1:BinaryContent>
+                                          UE5HDQo … base-64-encoded-PDF-bytes …
+                                      </n1:BinaryContent>
+                                      <!-- <n1:FileName>police_report.pdf</n1:FileName> -->
+
+                                      <!-- optional original filename -->
+                                      <n1:OriginalFileName>police_report.pdf</n1:OriginalFileName>
+
+                                      <n1:LogicalDocuments>
+                                          <n1:LogicalDocument>
+                                              <n1:DocumentType>PoliceReport</n1:DocumentType>
+                                              <n1:DocumentDescription>
+                                                  Official accident report #2025-0567 obtained from Irvine PD.
+                                              </n1:DocumentDescription>
+                                          </n1:LogicalDocument>
+                                      </n1:LogicalDocuments>
+                                  </n1:Document>
+                              </n1:Documents>
+                          </n1:ArbAttachDocument>
+                      </n1:ArbitrationCommand>
+                  </n1:AFCommand>
+      responses:
+        '200':
+          description: Successful submission
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    xml:
+                      prefix: dtv5
+                xml:
+                  name: Response
+                  namespace: http://dint.arbfile.org/standard/types/domain/v5
+                  prefix: dtv5
+              example: |
+                <dtv5:Response xmlns:dtv5="http://dint.arbfile.org/standard/types/domain/v5">
+                    <dtv5:status>200</dtv5:status>
+                </dtv5:Response>
+components:
+  schemas:
+    AFCommand:
+      type: object
+      description: The AFCommand is the root element for all commands sent to AF.
+      properties:
+        RequesterGuid:
+          $ref: '#/components/schemas/Guid'
+        cid:
+          type: string
+          format: uuid
+          xml:
+            name: cid
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+      required:
+      - RequesterGuid
+      oneOf:
+      - type: object
+        properties:
+          SubrogationCommand:
+            $ref: '#/components/schemas/SubrogationCommand'
+        required:
+        - SubrogationCommand
+      - type: object
+        properties:
+          ArbitrationCommand:
+            $ref: '#/components/schemas/ArbitrationCommand'
+        required:
+        - ArbitrationCommand
+      xml:
+        name: AFCommand
+        namespace: http://dint.arbfile.org/standard/v4
+    SubrogationSource:
+      type: object
+      description: Subrogation and claim information
+      properties:
+        HandlingCocode:
+          $ref: '#/components/schemas/Cocode'
+        SubjectCocode:
+          $ref: '#/components/schemas/Cocode'
+        SubjectSubsid:
+          $ref: '#/components/schemas/CompanySubsidCode'
+        SubjectClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        SubjectInternalReference:
+          $ref: '#/components/schemas/StringConstraint40'
+        AdverseClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        CaseVersion:
+          $ref: '#/components/schemas/CaseVersion'
+      required:
+      - HandlingCocode
+      - SubjectCocode
+      - SubjectClaimNumber
+      oneOf:
+      - type: object
+        properties:
+          DemandId:
+            $ref: '#/components/schemas/DemandId'
+        required:
+        - DemandId
+      - type: object
+        properties:
+          SubjectCompanyCaseId:
+            $ref: '#/components/schemas/CompanyCaseId'
+        required:
+        - SubjectCompanyCaseId
+      xml:
+        name: SubrogationSource
+        namespace: http://dint.arbfile.org/standard/v4
+    ArbitrationSource:
+      type: object
+      description: Arbitration docket information
+      properties:
+        HandlingCocode:
+          $ref: '#/components/schemas/Cocode'
+        HandlingSubsid:
+          $ref: '#/components/schemas/CompanySubsidCode'
+        SubjectCocode:
+          $ref: '#/components/schemas/Cocode'
+        SubjectSubsid:
+          $ref: '#/components/schemas/CompanySubsidCode'
+        SubjectClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+      required:
+      - HandlingCocode
+      - SubjectCocode
+      - SubjectClaimNumber
+      oneOf:
+      - type: object
+        properties:
+          DocketNumber:
+            $ref: '#/components/schemas/DocketNo'
+        required:
+        - DocketNumber
+      - type: object
+        properties:
+          AFCaseId:
+            $ref: '#/components/schemas/AFCaseId'
+        required:
+        - AFCaseId
+      xml:
+        name: ArbitrationSource
+        namespace: http://dint.arbfile.org/standard/v4
+    SubrogationCommand:
+      type: object
+      description: The entire Demand command including all types
+      properties:
+        Source:
+          $ref: '#/components/schemas/SubrogationSource'
+      required:
+      - Source
+      oneOf:
+      - type: object
+        properties:
+          AcceptDemand:
+            $ref: '#/components/schemas/AcceptDemand'
+        required:
+        - AcceptDemand
+      - type: object
+        properties:
+          AddFYIMessage:
+            $ref: '#/components/schemas/MessageCommand'
+        required:
+        - AddFYIMessage
+      - type: object
+        properties:
+          AddPayment:
+            $ref: '#/components/schemas/AddPayment'
+        required:
+        - AddPayment
+      - type: object
+        properties:
+          AddPrivateNote:
+            $ref: '#/components/schemas/MessageCommand'
+        required:
+        - AddPrivateNote
+      - type: object
+        properties:
+          CloseDemand:
+            $ref: '#/components/schemas/CloseDemand'
+        required:
+        - CloseDemand
+      - type: object
+        properties:
+          CorrectDemand:
+            $ref: '#/components/schemas/CorrectDemand'
+        required:
+        - CorrectDemand
+      - type: object
+        properties:
+          CounterOffer:
+            $ref: '#/components/schemas/CounterOffer'
+        required:
+        - CounterOffer
+      - type: object
+        properties:
+          CreateDemand:
+            $ref: '#/components/schemas/CreateDemand'
+        required:
+        - CreateDemand
+      - type: object
+        properties:
+          CreateIssueDemand:
+            $ref: '#/components/schemas/IssueDemand'
+        required:
+        - CreateIssueDemand
+      - type: object
+        properties:
+          DenyDemand:
+            $ref: '#/components/schemas/DenyDemand'
+        required:
+        - DenyDemand
+      - type: object
+        properties:
+          InitiateArbitration:
+            $ref: '#/components/schemas/InitiateArbitration'
+        required:
+        - InitiateArbitration
+      - type: object
+        properties:
+          PendDemand:
+            $ref: '#/components/schemas/PendingDemand'
+        required:
+        - PendDemand
+      - type: object
+        properties:
+          Ping:
+            $ref: '#/components/schemas/Ping'
+        required:
+        - Ping
+      - type: object
+        properties:
+          ReducePayment:
+            $ref: '#/components/schemas/ReducePayment'
+        required:
+        - ReducePayment
+      - type: object
+        properties:
+          Reject:
+            $ref: '#/components/schemas/Reject'
+        required:
+        - Reject
+      - type: object
+        properties:
+          ReplyToRequestForInfo:
+            $ref: '#/components/schemas/ReplyToRequestForInfo'
+        required:
+        - ReplyToRequestForInfo
+      - type: object
+        properties:
+          RequestInformation:
+            $ref: '#/components/schemas/MessageCommand'
+        required:
+        - RequestInformation
+      - type: object
+        properties:
+          SettleDemand:
+            $ref: '#/components/schemas/SettleDemand'
+        required:
+        - SettleDemand
+      - type: object
+        properties:
+          SubroAttachDocument:
+            $ref: '#/components/schemas/SubroAttachDocument'
+        required:
+        - SubroAttachDocument
+      - type: object
+        properties:
+          SupplementDemand:
+            $ref: '#/components/schemas/SupplementDemand'
+        required:
+        - SupplementDemand
+      - type: object
+        properties:
+          UpdateDemandDetails:
+            $ref: '#/components/schemas/UpdateDemandDetails'
+        required:
+        - UpdateDemandDetails
+      xml:
+        name: SubrogationCommand
+        namespace: http://dint.arbfile.org/standard/v4
+    SubrogationRole:
+      type: string
+      description: A command specific type
+      enum:
+      - Demander
+      - Responder
+      xml:
+        name: SubrogationRole
+        namespace: http://dint.arbfile.org/standard/v4
+    ArbitrationCommand:
+      type: object
+      description: The command used to move documents from subrogation to arbitration
+      properties:
+        Source:
+          $ref: '#/components/schemas/ArbitrationSource'
+        ArbAttachDocument:
+          $ref: '#/components/schemas/ArbAttachDocument'
+      required:
+      - Source
+      - ArbAttachDocument
+      xml:
+        name: ArbitrationCommand
+        namespace: http://dint.arbfile.org/standard/v4
+    AssociatedDemandType:
+      type: string
+      description: A command specific type
+      enum:
+      - Counter
+      - Companion
+      xml:
+        name: AssociatedDemandType
+        namespace: http://dint.arbfile.org/standard/v4
+    SubroAttachDocument:
+      type: object
+      description: The SubroAttachDocument command associates evidence-related documents
+        to a Demand based on the specified claimNumber.
+      properties:
+        IsPreprocess:
+          type: boolean
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        Documents:
+          $ref: '#/components/schemas/Documents'
+      required:
+      - IsPreprocess
+      - Documents
+      xml:
+        name: SubroAttachDocument
+        namespace: http://dint.arbfile.org/standard/v4
+    IssueDemand:
+      type: object
+      description: The IssueDemand command issues the specified Demand.
+      properties:
+        AssociatedDemands:
+          type: object
+          properties:
+            AssociatedDemand:
+              type: object
+              properties:
+                AssociatedDemandType:
+                  $ref: '#/components/schemas/AssociatedDemandType'
+              required:
+              - AssociatedDemandType
+              oneOf:
+              - type: object
+                properties:
+                  DemandId:
+                    $ref: '#/components/schemas/DemandId'
+                required:
+                - DemandId
+              - type: object
+                properties:
+                  CompanyCaseId:
+                    $ref: '#/components/schemas/CompanyCaseId'
+                required:
+                - CompanyCaseId
+              x-nullable: true
+          x-nullable: true
+        LossType:
+          $ref: '#/components/schemas/StringConstraint100'
+        Incident:
+          type: object
+          properties:
+            IncidentState:
+              $ref: '#/components/schemas/State'
+            IncidentLocation:
+              $ref: '#/components/schemas/StringConstraint100'
+            IncidentCity:
+              $ref: '#/components/schemas/StringConstraint40'
+            IncidentDate:
+              type: string
+              format: date
+              xml:
+                name: date
+                namespace: http://dint.arbfile.org/standard/v4
+          required:
+          - IncidentState
+          - IncidentDate
+        ResponderParty:
+          $ref: '#/components/schemas/MinimalCompany'
+        DemanderDetails:
+          $ref: '#/components/schemas/DemanderDetails'
+        ResponderDetails:
+          $ref: '#/components/schemas/ResponderDetails'
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            TotalLoss:
+              type: boolean
+              xml:
+                name: boolean
+                namespace: http://dint.arbfile.org/standard/v4
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+            LiabilityPercent:
+              $ref: '#/components/schemas/NonEmptyPercent'
+            TotalDemand:
+              $ref: '#/components/schemas/PositiveMoney'
+            Message:
+              $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+          required:
+          - Deductible
+          - TotalLoss
+          - LiabilityPercent
+          - TotalDemand
+          - Message
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+        Documents:
+          $ref: '#/components/schemas/Documents'
+      required:
+      - Incident
+      - ResponderParty
+      - DemanderDetails
+      - ResponderDetails
+      - Damages
+      xml:
+        name: IssueDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    CreateDemand:
+      type: object
+      description: The CreateDemand command creates but does not issue the specified
+        Demand.
+      properties:
+        LossType:
+          $ref: '#/components/schemas/StringConstraint100'
+        Incident:
+          $ref: '#/components/schemas/Incident'
+        ResponderParty:
+          $ref: '#/components/schemas/MinimalCompany'
+        DemanderDetails:
+          $ref: '#/components/schemas/DemanderDetails'
+        ResponderDetails:
+          $ref: '#/components/schemas/ResponderDetails'
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            TotalLoss:
+              type: boolean
+              xml:
+                name: boolean
+                namespace: http://dint.arbfile.org/standard/v4
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+            LiabilityPercent:
+              $ref: '#/components/schemas/NonEmptyPercent'
+            TotalDemand:
+              $ref: '#/components/schemas/PositiveMoney'
+            Message:
+              $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+          required:
+          - Deductible
+          - TotalLoss
+          - LiabilityPercent
+          - TotalDemand
+          - Message
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+          x-nullable: true
+        Documents:
+          $ref: '#/components/schemas/Documents'
+      required:
+      - Incident
+      - DemanderDetails
+      xml:
+        name: CreateDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    UpdateDemandDetails:
+      type: object
+      description: A Command to update the demand details
+      properties:
+        Role:
+          $ref: '#/components/schemas/SubrogationRole'
+        Incident:
+          type: object
+          properties:
+            IncidentState:
+              $ref: '#/components/schemas/State'
+            IncidentLocation:
+              $ref: '#/components/schemas/StringConstraint100'
+            IncidentCity:
+              $ref: '#/components/schemas/StringConstraint40'
+            IncidentDate:
+              type: string
+              format: date
+              x-nullable: true
+              xml:
+                name: date
+                namespace: http://dint.arbfile.org/standard/v4
+          x-nullable: true
+        DemanderParty:
+          type: object
+          properties:
+            CompanyCaseId:
+              $ref: '#/components/schemas/CompanyCaseId'
+            Company:
+              $ref: '#/components/schemas/MinimalCompany'
+          x-nullable: true
+        ResponderParty:
+          type: object
+          properties:
+            CompanyCaseId:
+              $ref: '#/components/schemas/CompanyCaseId'
+            Company:
+              $ref: '#/components/schemas/MinimalCompany'
+          x-nullable: true
+        DemanderDetails:
+          type: object
+          description: Detail information of the demand party.
+          properties:
+            ClaimNumber:
+              $ref: '#/components/schemas/StringConstraint40'
+            PolicyNumber:
+              $ref: '#/components/schemas/StringConstraint40'
+            InternalReference:
+              $ref: '#/components/schemas/StringConstraint40'
+            LossFacts:
+              $ref: '#/components/schemas/String4000'
+            Remittance:
+              $ref: '#/components/schemas/Remittance'
+            Insured:
+              type: object
+              properties:
+                Type:
+                  $ref: '#/components/schemas/InsuredType'
+                IsDriver:
+                  type: boolean
+                  x-nullable: true
+                  xml:
+                    name: boolean
+                    namespace: http://dint.arbfile.org/standard/v4
+                LineOfInsurance:
+                  $ref: '#/components/schemas/LineOfInsurance'
+              oneOf:
+              - type: object
+                properties:
+                  PersonName:
+                    type: object
+                    properties:
+                      FirstName:
+                        $ref: '#/components/schemas/StringConstraint40'
+                      LastName:
+                        $ref: '#/components/schemas/StringConstraint40'
+                required:
+                - PersonName
+              - type: object
+                properties:
+                  Company:
+                    $ref: '#/components/schemas/StringConstraint40'
+              x-nullable: true
+            Driver:
+              $ref: '#/components/schemas/Driver'
+            RepresentativeContact:
+              $ref: '#/components/schemas/SubroRepresentativeContact'
+          x-nullable: true
+        ResponderDetails:
+          type: object
+          description: Detail information of the response party.
+          properties:
+            ClaimNumber:
+              $ref: '#/components/schemas/StringConstraint40'
+            PolicyNumber:
+              $ref: '#/components/schemas/StringConstraint40'
+            InternalReference:
+              $ref: '#/components/schemas/StringConstraint40'
+            Insured:
+              type: object
+              properties:
+                Type:
+                  $ref: '#/components/schemas/InsuredType'
+                IsDriver:
+                  type: boolean
+                  x-nullable: true
+                  xml:
+                    name: boolean
+                    namespace: http://dint.arbfile.org/standard/v4
+                LineOfInsurance:
+                  $ref: '#/components/schemas/LineOfInsurance'
+              oneOf:
+              - type: object
+                properties:
+                  PersonName:
+                    type: object
+                    properties:
+                      FirstName:
+                        $ref: '#/components/schemas/StringConstraint40'
+                      LastName:
+                        $ref: '#/components/schemas/StringConstraint40'
+                required:
+                - PersonName
+              - type: object
+                properties:
+                  Company:
+                    $ref: '#/components/schemas/StringConstraint40'
+              x-nullable: true
+            Driver:
+              $ref: '#/components/schemas/Driver'
+            RepresentativeContact:
+              $ref: '#/components/schemas/SubroRepresentativeContact'
+          x-nullable: true
+      required:
+      - Role
+      xml:
+        name: UpdateDemandDetails
+        namespace: http://dint.arbfile.org/standard/v4
+    SupplementDemand:
+      type: object
+      description: The SupplDemand command files a supplement against the specified
+        Demand.
+      properties:
+        Resolved:
+          type: boolean
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            TotalLoss:
+              type: boolean
+              xml:
+                name: boolean
+                namespace: http://dint.arbfile.org/standard/v4
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+            LiabilityPercent:
+              $ref: '#/components/schemas/NonEmptyPercent'
+            Message:
+              $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+          required:
+          - Deductible
+          - TotalLoss
+          - LiabilityPercent
+          - Message
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+        Documents:
+          $ref: '#/components/schemas/Documents'
+      required:
+      - Resolved
+      - Damages
+      xml:
+        name: SupplementDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    ArbAttachDocument:
+      type: object
+      description: The ArbAttachDocument command associates Evidence-related documents
+        to a Docket based on the specified ClaimNumber.
+      properties:
+        Documents:
+          $ref: '#/components/schemas/CommandArbDocuments'
+      required:
+      - Documents
+      xml:
+        name: ArbAttachDocument
+        namespace: http://dint.arbfile.org/standard/v4
+    Reject:
+      type: object
+      description: The Reject command to notify the AF system that event has been
+        rejected.
+      oneOf:
+      - type: object
+        properties:
+          DemandPackage:
+            $ref: '#/components/schemas/DemandPackage'
+        required:
+        - DemandPackage
+      - type: object
+        properties:
+          RejectDemand:
+            $ref: '#/components/schemas/RejectDemand'
+        required:
+        - RejectDemand
+      xml:
+        name: Reject
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandPackage:
+      type: object
+      description: This element is part of the Reject command to identify what we
+        are rejecting.
+      xml:
+        name: DemandPackage
+        namespace: http://dint.arbfile.org/standard/v4
+    RejectDemand:
+      type: object
+      xml:
+        name: RejectDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    Ping:
+      type: object
+      description: The Ping command to run access the system.
+      properties:
+        CheckStatus:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+      xml:
+        name: Ping
+        namespace: http://dint.arbfile.org/standard/v4
+    PendingDemand:
+      type: object
+      description: The PendingDemand command to notify that demand is pending investigation.
+      properties:
+        Message:
+          $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+        PendingType:
+          $ref: '#/components/schemas/PendingType'
+      required:
+      - Message
+      - PendingType
+      xml:
+        name: PendingDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    DenyDemand:
+      type: object
+      description: The DenyDemand command to notify that demand has been denied.
+      properties:
+        Message:
+          $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+        DenialType:
+          $ref: '#/components/schemas/DenialType'
+      required:
+      - Message
+      xml:
+        name: DenyDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    CounterOffer:
+      type: object
+      description: This command will take in a CounterRequest object.
+      properties:
+        Role:
+          $ref: '#/components/schemas/SubrogationRole'
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+            LiabilityPercent:
+              $ref: '#/components/schemas/NonEmptyPercent'
+            AdmitLiability:
+              type: boolean
+              x-nullable: true
+              xml:
+                name: boolean
+                namespace: http://dint.arbfile.org/standard/v4
+            TotalDemand:
+              $ref: '#/components/schemas/PositiveMoney'
+            Message:
+              $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+          required:
+          - Deductible
+          - LiabilityPercent
+          - TotalDemand
+          - Message
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+      required:
+      - Role
+      - Damages
+      xml:
+        name: CounterOffer
+        namespace: http://dint.arbfile.org/standard/v4
+    MessageCommand:
+      type: object
+      description: The Message command is used to add a priovate note to a Demand
+      properties:
+        Role:
+          $ref: '#/components/schemas/SubrogationRole'
+        Message:
+          $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+      required:
+      - Role
+      - Message
+      xml:
+        name: MessageCommand
+        namespace: http://dint.arbfile.org/standard/v4
+    CorrectDemand:
+      type: object
+      description: A Command from the Demander to correct the damages
+      properties:
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            TotalLoss:
+              type: boolean
+              x-nullable: true
+              xml:
+                name: boolean
+                namespace: http://dint.arbfile.org/standard/v4
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+            TotalDemand:
+              $ref: '#/components/schemas/PositiveMoney'
+            Message:
+              $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+          required:
+          - TotalDemand
+          - Message
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+      required:
+      - Damages
+      xml:
+        name: CorrectDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    AcceptDemand:
+      type: object
+      description: A Command from either party accepting the Demand or negotiation
+        amount
+      properties:
+        Role:
+          $ref: '#/components/schemas/SubrogationRole'
+        Message:
+          $ref: '#/components/schemas/StringConstraint3900'
+      required:
+      - Role
+      xml:
+        name: AcceptDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    AddPayment:
+      type: object
+      description: A Command from the Demander to add a payment
+      properties:
+        Payment:
+          $ref: '#/components/schemas/CMDPayment'
+      required:
+      - Payment
+      xml:
+        name: AddPayment
+        namespace: http://dint.arbfile.org/standard/v4
+    CloseDemand:
+      type: object
+      description: A Command from the Demander to close the demand
+      properties:
+        Message:
+          $ref: '#/components/schemas/StringConstraint3900'
+        CloseDetail:
+          $ref: '#/components/schemas/CloseDetail'
+        Payment:
+          $ref: '#/components/schemas/CMDPayment'
+      required:
+      - CloseDetail
+      xml:
+        name: CloseDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    ReplyToRequestForInfo:
+      type: object
+      properties:
+        Role:
+          $ref: '#/components/schemas/SubrogationRole'
+        Message:
+          $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+        MarkRequestAsCompleted:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - Role
+      - Message
+      xml:
+        name: ReplyToRequestForInfo
+        namespace: http://dint.arbfile.org/standard/v4
+    SettleDemand:
+      type: object
+      description: A Command from the Demander to manually settle the demand
+      properties:
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            TotalLoss:
+              type: boolean
+              x-nullable: true
+              xml:
+                name: boolean
+                namespace: http://dint.arbfile.org/standard/v4
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+            LiabilityPercent:
+              $ref: '#/components/schemas/NonEmptyPercent'
+            TotalDemand:
+              $ref: '#/components/schemas/PositiveMoney'
+            Message:
+              $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+          required:
+          - LiabilityPercent
+          - TotalDemand
+          - Message
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+        CloseDetail:
+          $ref: '#/components/schemas/CloseDetail'
+        Payment:
+          $ref: '#/components/schemas/CMDPayment'
+      required:
+      - Damages
+      xml:
+        name: SettleDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    CloseDetail:
+      type: object
+      description: A Command with close information
+      properties:
+        CloseType:
+          type: string
+          enum:
+          - Abandoned
+          - ArbitrationDocketHeardAndClosed
+          - Denied
+          - FiledInError
+          - FilingArbitration
+          - Inactive
+          - Settled
+        Resolved:
+          type: boolean
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - CloseType
+      - Resolved
+      xml:
+        name: CloseDetail
+        namespace: http://dint.arbfile.org/standard/v4
+    CMDPayment:
+      type: object
+      description: Payment detail information.
+      properties:
+        PaymentAmount:
+          $ref: '#/components/schemas/Money'
+        GLAcctReference:
+          $ref: '#/components/schemas/StringConstraint40'
+        CheckNumber:
+          $ref: '#/components/schemas/StringConstraint20'
+        CheckReceivedDate:
+          type: string
+          format: date
+          xml:
+            name: date
+            namespace: http://dint.arbfile.org/standard/v4
+        Comment:
+          $ref: '#/components/schemas/Text'
+      required:
+      - PaymentAmount
+      - CheckReceivedDate
+      xml:
+        name: CMDPayment
+        namespace: http://dint.arbfile.org/standard/v4
+    CommandArbDocuments:
+      type: object
+      description: Information about the ARB documents.
+      properties:
+        Document:
+          $ref: '#/components/schemas/CommandArbDocument'
+      required:
+      - Document
+      xml:
+        name: CommandArbDocuments
+        namespace: http://dint.arbfile.org/standard/v4
+    CommandArbDocument:
+      type: object
+      description: Information about a document
+      properties:
+        ContentType:
+          $ref: '#/components/schemas/ContentType'
+        OriginalFileName:
+          $ref: '#/components/schemas/StringConstraint255'
+        LogicalDocuments:
+          $ref: '#/components/schemas/LogicalDocuments'
+      required:
+      - ContentType
+      - LogicalDocuments
+      oneOf:
+      - type: object
+        properties:
+          BinaryContent:
+            $ref: '#/components/schemas/BinaryContent'
+        required:
+        - BinaryContent
+      - type: object
+        properties:
+          FileName:
+            $ref: '#/components/schemas/StringConstraint255'
+        required:
+        - FileName
+      xml:
+        name: CommandArbDocument
+        namespace: http://dint.arbfile.org/standard/v4
+    InitiateArbitration:
+      type: object
+      properties:
+        DemandId:
+          $ref: '#/components/schemas/DemandId'
+      required:
+      - DemandId
+      xml:
+        name: InitiateArbitration
+        namespace: http://dint.arbfile.org/standard/v4
+    ReducePayment:
+      type: object
+      properties:
+        Damages:
+          type: object
+          properties:
+            RentalExpense:
+              $ref: '#/components/schemas/Money'
+            TowingExpense:
+              $ref: '#/components/schemas/Money'
+            OtherExpense:
+              $ref: '#/components/schemas/Money'
+            Deductible:
+              $ref: '#/components/schemas/Money'
+            SalvageAmount:
+              $ref: '#/components/schemas/Money'
+          oneOf:
+          - type: object
+            properties:
+              AutoDamages:
+                $ref: '#/components/schemas/Money'
+          - type: object
+            properties:
+              Comprehensive:
+                $ref: '#/components/schemas/Money'
+        LiabilityPercent:
+          $ref: '#/components/schemas/NonEmptyPercent'
+        AdmitLiability:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        Message:
+          $ref: '#/components/schemas/NonEmptyStringConstraint3900'
+        CurrentOffer:
+          type: object
+          properties:
+            Amount:
+              $ref: '#/components/schemas/Money'
+            DemandOverrideReason:
+              type: string
+              enum:
+              - Apportionment
+              - PolicyLimit
+          required:
+          - Amount
+          - DemandOverrideReason
+          x-nullable: true
+        CancelPriorReducedPayment:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - Damages
+      - LiabilityPercent
+      - Message
+      xml:
+        name: ReducePayment
+        namespace: http://dint.arbfile.org/standard/v4
+    Guid:
+      type: string
+      format: uuid
+      xml:
+        name: Guid
+        namespace: http://dint.arbfile.org/standard/v4
+    CaseVersion:
+      type: string
+      xml:
+        name: CaseVersion
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandId:
+      type: string
+      description: An AF identifier for the demand. This is unique identifier that
+        can be used to identify the demand in the AF system.
+      pattern: ^\d+$
+      xml:
+        name: DemandId
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint100:
+      type: string
+      maxLength: 100
+      xml:
+        name: StringConstraint100
+        namespace: http://dint.arbfile.org/standard/v4
+    CompanyCaseId:
+      type: string
+      description: The identifier used by the receiving company for the demand. This
+        can be optionally supplied by the demander when issuing the demand.
+      pattern: ^\d+$
+      xml:
+        name: CompanyCaseId
+        namespace: http://dint.arbfile.org/standard/v4
+    Incident:
+      type: object
+      properties:
+        IncidentState:
+          $ref: '#/components/schemas/State'
+        IncidentLocation:
+          $ref: '#/components/schemas/StringConstraint100'
+        IncidentCity:
+          $ref: '#/components/schemas/StringConstraint40'
+        IncidentDate:
+          type: string
+          format: date
+          x-nullable: true
+          xml:
+            name: date
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - IncidentState
+      xml:
+        name: Incident
+        namespace: http://dint.arbfile.org/standard/v4
+    DemanderDetails:
+      type: object
+      description: Detail information of the demand party.
+      properties:
+        ClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        PolicyNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        InternalReference:
+          $ref: '#/components/schemas/StringConstraint40'
+        LossFacts:
+          $ref: '#/components/schemas/String4000'
+        Remittance:
+          $ref: '#/components/schemas/Remittance'
+        Insured:
+          $ref: '#/components/schemas/Insured'
+        Driver:
+          $ref: '#/components/schemas/Driver'
+        RepresentativeContact:
+          $ref: '#/components/schemas/SubroRepresentativeContact'
+      required:
+      - ClaimNumber
+      - Insured
+      xml:
+        name: DemanderDetails
+        namespace: http://dint.arbfile.org/standard/v4
+    ResponderDetails:
+      type: object
+      description: Detail information of the response party.
+      properties:
+        ClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        PolicyNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        InternalReference:
+          $ref: '#/components/schemas/StringConstraint40'
+        Insured:
+          $ref: '#/components/schemas/Insured'
+        Driver:
+          $ref: '#/components/schemas/Driver'
+        RepresentativeContact:
+          $ref: '#/components/schemas/SubroRepresentativeContact'
+      xml:
+        name: ResponderDetails
+        namespace: http://dint.arbfile.org/standard/v4
+    Remittance:
+      type: object
+      description: Type to describe remittance information for a party
+      properties:
+        RemitTo:
+          $ref: '#/components/schemas/Cocode'
+        Address:
+          $ref: '#/components/schemas/Address'
+        Phone:
+          $ref: '#/components/schemas/Phone'
+      xml:
+        name: Remittance
+        namespace: http://dint.arbfile.org/standard/v4
+    Insured:
+      type: object
+      description: Insured information.
+      properties:
+        Type:
+          $ref: '#/components/schemas/InsuredType'
+        IsDriver:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        LineOfInsurance:
+          $ref: '#/components/schemas/LineOfInsurance'
+      required:
+      - Type
+      oneOf:
+      - type: object
+        properties:
+          PersonName:
+            type: object
+            properties:
+              FirstName:
+                $ref: '#/components/schemas/StringConstraint40'
+              LastName:
+                $ref: '#/components/schemas/StringConstraint40'
+            required:
+            - LastName
+        required:
+        - PersonName
+      - type: object
+        properties:
+          Company:
+            $ref: '#/components/schemas/StringConstraint40'
+        required:
+        - Company
+      xml:
+        name: Insured
+        namespace: http://dint.arbfile.org/standard/v4
+    InsuredType:
+      type: string
+      description: Type indicates if coverage is personal or commercial
+      enum:
+      - Commercial
+      - Personal
+      xml:
+        name: InsuredType
+        namespace: http://dint.arbfile.org/standard/v4
+    LineOfInsurance:
+      type: string
+      description: Line of Insurance indicates if coverage is Auto Liability or General
+        Liability and is used for Special program cases
+      enum:
+      - AutoLiability
+      - GeneralLiability
+      xml:
+        name: LineOfInsurance
+        namespace: http://dint.arbfile.org/standard/v4
+    Driver:
+      type: object
+      description: Driver information.
+      properties:
+        FirstName:
+          $ref: '#/components/schemas/StringConstraint40'
+        LastName:
+          $ref: '#/components/schemas/StringConstraint40'
+        Bailment:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        Vehicle:
+          $ref: '#/components/schemas/Vehicle'
+      xml:
+        name: Driver
+        namespace: http://dint.arbfile.org/standard/v4
+    Vehicle:
+      type: object
+      description: Vehicle information.
+      properties:
+        Year:
+          $ref: '#/components/schemas/Year'
+        Make:
+          $ref: '#/components/schemas/StringConstraint40'
+        Model:
+          $ref: '#/components/schemas/StringConstraint40'
+        PlateNumber:
+          $ref: '#/components/schemas/StringConstraint10'
+        PlateState:
+          $ref: '#/components/schemas/State'
+      xml:
+        name: Vehicle
+        namespace: http://dint.arbfile.org/standard/v4
+    SubroRepresentativeContact:
+      type: object
+      description: Representative contact information for Subrogation.
+      properties:
+        FullName:
+          $ref: '#/components/schemas/StringConstraint100'
+        Address:
+          $ref: '#/components/schemas/Address'
+        Email:
+          $ref: '#/components/schemas/Email'
+        Phone:
+          $ref: '#/components/schemas/Phone'
+      xml:
+        name: SubroRepresentativeContact
+        namespace: http://dint.arbfile.org/standard/v4
+    Address:
+      type: object
+      description: Address information.
+      properties:
+        Address1:
+          $ref: '#/components/schemas/StringConstraint256'
+        Address2:
+          $ref: '#/components/schemas/StringConstraint256'
+        Attention:
+          $ref: '#/components/schemas/StringConstraint100'
+        City:
+          $ref: '#/components/schemas/StringConstraint100'
+        State:
+          $ref: '#/components/schemas/State'
+        Zip:
+          $ref: '#/components/schemas/StringConstraint20'
+        Country:
+          $ref: '#/components/schemas/StringConstraint03'
+      xml:
+        name: Address
+        namespace: http://dint.arbfile.org/standard/v4
+    Email:
+      type: string
+      description: Email address.
+      xml:
+        name: Email
+        namespace: http://dint.arbfile.org/standard/v4
+    DocketNo:
+      type: string
+      description: Assigned docket number.
+      pattern: ^\d{2}-\d{6}$
+      xml:
+        name: DocketNo
+        namespace: http://dint.arbfile.org/standard/v4
+    AFCaseId:
+      type: string
+      description: Assigned TRS Case ID.
+      pattern: ^\d+$
+      xml:
+        name: AFCaseId
+        namespace: http://dint.arbfile.org/standard/v4
+    Cocode:
+      type: string
+      description: AF assigned company code.
+      minLength: 5
+      maxLength: 5
+      pattern: ^\d{5}$
+      xml:
+        name: Cocode
+        namespace: http://dint.arbfile.org/standard/v4
+    MinimalCompany:
+      type: object
+      description: Least amount of information needed to identify member company.
+      properties:
+        Name:
+          xml:
+            name: string
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - Name
+      xml:
+        name: MinimalCompany
+        namespace: http://dint.arbfile.org/standard/v4
+    Documents:
+      type: object
+      description: Information about the documents.
+      properties:
+        Document:
+          $ref: '#/components/schemas/Document'
+      xml:
+        name: Documents
+        namespace: http://dint.arbfile.org/standard/v4
+    NonEmptyBase64Binary:
+      type: string
+      minLength: 1
+      xml:
+        name: NonEmptyBase64Binary
+        namespace: http://dint.arbfile.org/standard/v4
+    BinaryContent:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/NonEmptyBase64Binary'
+      properties:
+        href:
+          type: string
+          format: uri
+          xml:
+            name: href
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+      xml:
+        name: BinaryContent
+        namespace: http://dint.arbfile.org/standard/v4
+    Document:
+      type: object
+      properties:
+        ContentType:
+          $ref: '#/components/schemas/ContentType'
+        OriginalFileName:
+          $ref: '#/components/schemas/StringConstraint255'
+        IsPublic:
+          type: boolean
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        LogicalDocuments:
+          $ref: '#/components/schemas/LogicalDocuments'
+      required:
+      - ContentType
+      - IsPublic
+      - LogicalDocuments
+      oneOf:
+      - type: object
+        properties:
+          BinaryContent:
+            $ref: '#/components/schemas/BinaryContent'
+        required:
+        - BinaryContent
+      - type: object
+        properties:
+          FileName:
+            $ref: '#/components/schemas/StringConstraint255'
+        required:
+        - FileName
+      xml:
+        name: Document
+        namespace: http://dint.arbfile.org/standard/v4
+    LogicalDocuments:
+      type: object
+      properties:
+        LogicalDocument:
+          $ref: '#/components/schemas/LogicalDocument'
+      required:
+      - LogicalDocument
+      xml:
+        name: LogicalDocuments
+        namespace: http://dint.arbfile.org/standard/v4
+    LogicalDocument:
+      type: object
+      properties:
+        DocumentType:
+          $ref: '#/components/schemas/DocumentType'
+        DocumentDescription:
+          $ref: '#/components/schemas/String4000'
+      required:
+      - DocumentType
+      xml:
+        name: LogicalDocument
+        namespace: http://dint.arbfile.org/standard/v4
+    DocumentType:
+      type: string
+      xml:
+        name: DocumentType
+        namespace: http://dint.arbfile.org/standard/v4
+    Money:
+      oneOf:
+      - type: number
+        minimum: -99999999.99
+        maximum: 99999999.99
+        multipleOf: 0.01
+      - type: string
+        minLength: 0
+        maxLength: 0
+      xml:
+        name: Money
+        namespace: http://dint.arbfile.org/standard/v4
+    PositiveMoney:
+      oneOf:
+      - type: number
+        minimum: -99999999.99
+        maximum: 99999999.99
+        multipleOf: 0.01
+      - type: string
+        minLength: 0
+        maxLength: 0
+      xml:
+        name: PositiveMoney
+        namespace: http://dint.arbfile.org/standard/v4
+    NonEmptyPercent:
+      type: number
+      minimum: 0.01
+      maximum: 100
+      xml:
+        name: NonEmptyPercent
+        namespace: http://dint.arbfile.org/standard/v4
+    Year:
+      type: string
+      maxLength: 4
+      xml:
+        name: Year
+        namespace: http://dint.arbfile.org/standard/v4
+    CompanySubsidCode:
+      type: string
+      xml:
+        name: CompanySubsidCode
+        namespace: http://dint.arbfile.org/standard/v4
+    State:
+      type: string
+      maxLength: 2
+      xml:
+        name: State
+        namespace: http://dint.arbfile.org/standard/v4
+    Phone:
+      type: string
+      maxLength: 30
+      xml:
+        name: Phone
+        namespace: http://dint.arbfile.org/standard/v4
+    Text:
+      type: string
+      maxLength: 2000
+      xml:
+        name: Text
+        namespace: http://dint.arbfile.org/standard/v4
+    String4000:
+      type: string
+      maxLength: 4000
+      xml:
+        name: String4000
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint03:
+      type: string
+      maxLength: 3
+      xml:
+        name: StringConstraint03
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint10:
+      type: string
+      maxLength: 10
+      xml:
+        name: StringConstraint10
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint20:
+      type: string
+      maxLength: 20
+      xml:
+        name: StringConstraint20
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint40:
+      type: string
+      maxLength: 40
+      xml:
+        name: StringConstraint40
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint255:
+      type: string
+      maxLength: 255
+      xml:
+        name: StringConstraint255
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint256:
+      type: string
+      maxLength: 256
+      xml:
+        name: StringConstraint256
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint3900:
+      type: string
+      maxLength: 3900
+      xml:
+        name: StringConstraint3900
+        namespace: http://dint.arbfile.org/standard/v4
+    NonEmptyStringConstraint3900:
+      type: string
+      minLength: 1
+      maxLength: 3900
+      xml:
+        name: NonEmptyStringConstraint3900
+        namespace: http://dint.arbfile.org/standard/v4
+    DenialType:
+      type: string
+      enum:
+      - ClaimPreviouslySettled
+      - LossNotCovered
+      - NoLiability
+      - NoPolicyExists
+      - Other
+      - PolicyLimitsPaidExceeded
+      xml:
+        name: DenialType
+        namespace: http://dint.arbfile.org/standard/v4
+    PendingType:
+      type: string
+      description: Type indicates if demand is pended because of FNOL or Investigating
+      enum:
+      - FNOL
+      - Investigate
+      xml:
+        name: PendingType
+        namespace: http://dint.arbfile.org/standard/v4
+    ContentType:
+      type: string
+      xml:
+        name: ContentType
+        namespace: http://dint.arbfile.org/standard/v4
+    

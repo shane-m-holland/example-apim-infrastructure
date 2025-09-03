@@ -1,0 +1,396 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Dev01 Paysol Proxy Web REST",
+        "description": "REST API specifications for Payments and Accounts.",
+        "version": "1.0"
+    },
+    "paths": {
+        "/v2/account/payment/{paymentID}": {
+            "get": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "Bank Account Resource REST",
+                "description": "Bank Account Resource REST",
+                "operationId": "bank-account-resource-rest",
+                "parameters": [{
+                    "name": "paymentID",
+                    "in": "path",
+                    "description": "A guaranteed unique identifier for payment transactions. This ID is generated only once for a payment, and all subsequent events and commands should use this ID.",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successful response returning payment in XML format",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payments"
+                                },
+                                "example": "<pay:Payments xmlns:pay=\"http://dint.arbfile.org/payment/v2\"> <pay:Payment> <pay:PaymentId>6b609012-3467-47c5-901c-5ea04fa8e629</pay:PaymentId> <pay:Amount>3700</pay:Amount> <pay:PaymentStatus>PENDING</pay:PaymentStatus> <pay:Payer> <pay:Cocode>04513</pay:Cocode> <pay:Subsid>0002</pay:Subsid> <pay:CompanyName>ALPHA INSURANCE OF FLORIDA</pay:CompanyName> <pay:ClaimNumber>VEN-0920241800-D-C</pay:ClaimNumber> <pay:Insured> <pay:FirstName>VEN</pay:FirstName> <pay:LastName>DEM</pay:LastName> <pay:InsuredType>Personal</pay:InsuredType> <pay:Vehicle/> </pay:Insured> </pay:Payer> <pay:Payee> <pay:Cocode>04514</pay:Cocode> <pay:Subsid>0002</pay:Subsid> <pay:CompanyName>BETA INSURANCE OF COLORADO</pay:CompanyName> <pay:ClaimNumber>VEN-0920241800-R-C</pay:ClaimNumber> <pay:Insured> <pay:FirstName>VEN</pay:FirstName> <pay:LastName>RESP</pay:LastName> <pay:InsuredType>Personal</pay:InsuredType> <pay:Vehicle/> </pay:Insured> </pay:Payee> <pay:IncidentState>FL</pay:IncidentState> <pay:IncidentDate>2024-09-16-04:00</pay:IncidentDate> <pay:UnknownPaymentSource> <pay:SourceName>TRS</pay:SourceName> <pay:SourceId>4641</pay:SourceId> </pay:UnknownPaymentSource> <pay:PaymentActivity> <pay:activity> <pay:Action>REQUEST</pay:Action> <pay:ActivityDate>2024-09-21T17:10:46-04:00</pay:ActivityDate> <pay:ResultingStatus>REQUESTED</pay:ResultingStatus> </pay:activity> <pay:activity> <pay:Action>ACCEPT</pay:Action> <pay:ActivityDate>2025-07-01T11:56:27-04:00</pay:ActivityDate> <pay:ResultingStatus>PENDING</pay:ResultingStatus> </pay:activity> </pay:PaymentActivity> </pay:Payment> </pay:Payments>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/account/payment": {
+            "get": {
+                "summary": "Query - Bank Account Resource REST",
+                "description": "Query - Bank Account Resource REST",
+                "operationId": "query-bank-account-resource-rest",
+                "parameters": [{
+                    "name": "paymentID",
+                    "in": "query",
+                    "description": "A guaranteed unique identifier for payment transactions. This ID is generated only once for a payment, and all subsequent events and commands should use this ID.",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successful response returning payment in XML format",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payments"
+                                },
+                                "example": "<pay:Payments xmlns:pay=\"http://dint.arbfile.org/payment/v2\"> <pay:Payment> <pay:PaymentId>6b609012-3467-47c5-901c-5ea04fa8e629</pay:PaymentId> <pay:Amount>3700</pay:Amount> <pay:PaymentStatus>PENDING</pay:PaymentStatus> <pay:Payer> <pay:Cocode>04513</pay:Cocode> <pay:Subsid>0002</pay:Subsid> <pay:CompanyName>ALPHA INSURANCE OF FLORIDA</pay:CompanyName> <pay:ClaimNumber>VEN-0920241800-D-C</pay:ClaimNumber> <pay:Insured> <pay:FirstName>VEN</pay:FirstName> <pay:LastName>DEM</pay:LastName> <pay:InsuredType>Personal</pay:InsuredType> <pay:Vehicle/> </pay:Insured> </pay:Payer> <pay:Payee> <pay:Cocode>04514</pay:Cocode> <pay:Subsid>0002</pay:Subsid> <pay:CompanyName>BETA INSURANCE OF COLORADO</pay:CompanyName> <pay:ClaimNumber>VEN-0920241800-R-C</pay:ClaimNumber> <pay:Insured> <pay:FirstName>VEN</pay:FirstName> <pay:LastName>RESP</pay:LastName> <pay:InsuredType>Personal</pay:InsuredType> <pay:Vehicle/> </pay:Insured> </pay:Payee> <pay:IncidentState>FL</pay:IncidentState> <pay:IncidentDate>2024-09-16-04:00</pay:IncidentDate> <pay:UnknownPaymentSource> <pay:SourceName>TRS</pay:SourceName> <pay:SourceId>4641</pay:SourceId> </pay:UnknownPaymentSource> <pay:PaymentActivity> <pay:activity> <pay:Action>REQUEST</pay:Action> <pay:ActivityDate>2024-09-21T17:10:46-04:00</pay:ActivityDate> <pay:ResultingStatus>REQUESTED</pay:ResultingStatus> </pay:activity> <pay:activity> <pay:Action>ACCEPT</pay:Action> <pay:ActivityDate>2025-07-01T11:56:27-04:00</pay:ActivityDate> <pay:ResultingStatus>PENDING</pay:ResultingStatus> </pay:activity> </pay:PaymentActivity> </pay:Payment> </pay:Payments>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/payment/{paymentID}": {
+            "get": {
+                "tags": ["Dev", "Dev01", "REST"],
+                "summary": "Payment Details REST",
+                "description": "Payment Details REST",
+                "operationId": "payment-details-rest",
+                "parameters": [{
+                    "name": "paymentID",
+                    "in": "path",
+                    "description": "A guaranteed unique identifier for payment transactions. This ID is generated only once for a payment, and all subsequent events and commands should use this ID.",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }, {
+                    "name": "version",
+                    "in": "query",
+                    "description": "intended version of API to access",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successful response returning payment in XML format",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payments"
+                                },
+                                "example": "<pay:Payments xmlns:pay=\"http://dint.arbfile.org/payment/v2\"> <pay:Payment> <pay:PaymentId>6b609012-3467-47c5-901c-5ea04fa8e629</pay:PaymentId> <pay:Amount>3700</pay:Amount> <pay:PaymentStatus>PENDING</pay:PaymentStatus> <pay:Payer> <pay:Cocode>04513</pay:Cocode> <pay:Subsid>0002</pay:Subsid> <pay:CompanyName>ALPHA INSURANCE OF FLORIDA</pay:CompanyName> <pay:ClaimNumber>VEN-0920241800-D-C</pay:ClaimNumber> <pay:Insured> <pay:FirstName>VEN</pay:FirstName> <pay:LastName>DEM</pay:LastName> <pay:InsuredType>Personal</pay:InsuredType> <pay:Vehicle/> </pay:Insured> </pay:Payer> <pay:Payee> <pay:Cocode>04514</pay:Cocode> <pay:Subsid>0002</pay:Subsid> <pay:CompanyName>BETA INSURANCE OF COLORADO</pay:CompanyName> <pay:ClaimNumber>VEN-0920241800-R-C</pay:ClaimNumber> <pay:Insured> <pay:FirstName>VEN</pay:FirstName> <pay:LastName>RESP</pay:LastName> <pay:InsuredType>Personal</pay:InsuredType> <pay:Vehicle/> </pay:Insured> </pay:Payee> <pay:IncidentState>FL</pay:IncidentState> <pay:IncidentDate>2024-09-16-04:00</pay:IncidentDate> <pay:UnknownPaymentSource> <pay:SourceName>TRS</pay:SourceName> <pay:SourceId>4641</pay:SourceId> </pay:UnknownPaymentSource> <pay:PaymentActivity> <pay:activity> <pay:Action>REQUEST</pay:Action> <pay:ActivityDate>2024-09-21T17:10:46-04:00</pay:ActivityDate> <pay:ResultingStatus>REQUESTED</pay:ResultingStatus> </pay:activity> <pay:activity> <pay:Action>ACCEPT</pay:Action> <pay:ActivityDate>2025-07-01T11:56:27-04:00</pay:ActivityDate> <pay:ResultingStatus>PENDING</pay:ResultingStatus> </pay:activity> </pay:PaymentActivity> </pay:Payment> </pay:Payments>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/payment/command": {
+            "post": {
+                "summary": "Payment Command REST",
+                "description": "Payment Command REST",
+                "operationId": "payment-command-rest",
+                "requestBody": {
+                    "content": {
+                        "application/xml": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PaymentCommand"
+                            },
+                            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <n1:PaymentCommand xmlns:xsi=http://www.w3.org/2001/XMLSchema-instance xmlns:n1=http://dint.arbfile.org/standard/commands/ses/v5 xsi:schemaLocation=http://dint.arbfile.org/standard/commands/ses/v5 AFSesCommand.xsd> <n1:PaymentId>6b609012-3467-47c5-901c-5ea04fa8e629</n1:PaymentId> <n1:Cocode>04513</n1:Cocode> <n1:AcceptPayment/> </n1:PaymentCommand>"
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/xml": {
+                                "example": "<dtv5:Response xmlns:dtv5=http://dint.arbfile.org/standard/types/domain/v5> <dtv5:status>200</dtv5:status> </dtv5:Response>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "PaymentCommand": {
+                "type": "object",
+                "properties": {
+                    "PaymentId": {
+                        "type": "string",
+                        "description": "A guaranteed unique identifier for payment transactions. This ID is generated only once for a payment, and all subsequent events and commands should use this ID.",
+                        "xml": {
+                            "prefix": "n1"
+                        }
+                    },
+                    "Cocode": {
+                        "type": "string",
+                        "description": "The identifier given to the member that identifies it to AF",
+                        "xml": {
+                            "prefix": "n1"
+                        }
+                    },
+                    "AcceptPayment": {
+                        "type": "object",
+                        "description": "Object representation of an Accept Payment model",
+                        "xml": {
+                            "name": "AcceptPayment",
+                            "prefix": "n1"
+                        }
+                    }
+                },
+                "xml": {
+                    "name": "PaymentCommand",
+                    "namespace": "http://dint.arbfile.org/standard/commands/ses/v5",
+                    "prefix": "n1"
+                }
+            },
+            "Party": {
+                "required": ["Cocode", "CompanyName"],
+                "type": "object",
+                "properties": {
+                    "Cocode": {
+                        "type": "string",
+                        "description": "The identifier given to the member that identifies it to AF",
+                        "xml": {
+                            "prefix": "pay"
+                        }
+                    },
+                    "Subsid": {
+                        "type": "string",
+                        "description": "Subsidiary company code in AF’s system",
+                        "xml": {
+                            "prefix": "pay"
+                        }
+                    },
+                    "CompanyName": {
+                        "type": "string",
+                        "description": "Company name",
+                        "xml": {
+                            "prefix": "pay"
+                        }
+                    },
+                    "ClaimNumber": {
+                        "type": "string",
+                        "description": "The claim number the payment is associated with.",
+                        "xml": {
+                            "prefix": "pay"
+                        }
+                    },
+                    "Insured": {
+                        "type": "object",
+                        "properties": {
+                            "FirstName": {
+                                "type": "string",
+                                "description": "Insured first name",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "LastName": {
+                                "type": "string",
+                                "description": "Insured last name",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "InsuredType": {
+                                "type": "string",
+                                "description": "Indicates if coverage is personal or commercial",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "Vehicle": {
+                                "type": "object",
+                                "properties": {
+                                    "Make": {
+                                        "type": "string",
+                                        "description": "Vehicle make",
+                                        "xml": {
+                                            "prefix": "pay"
+                                        }
+                                    },
+                                    "Model": {
+                                        "type": "string",
+                                        "description": "Vehicle model",
+                                        "xml": {
+                                            "prefix": "pay"
+                                        }
+                                    }
+                                },
+                                "description": "Object representation of a Vehicle.",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            }
+                        },
+                        "xml": {
+                            "prefix": "pay"
+                        }
+                    }
+                },
+                "description": "Payment party either payee or payer",
+                "xml": {
+                    "prefix": "pay"
+                }
+            },
+            "Payments": {
+                "required": ["PaymentId", "Amount"],
+                "type": "object",
+                "properties": {
+                    "Payment": {
+                        "type": "object",
+                        "properties": {
+                            "PaymentId": {
+                                "type": "string",
+                                "description": "This is a guaranteed unique identifier for payment transactions.\nThis ID is generated only once for a paymen, and all subsequent\nevents and commands should use this ID. Every time a new\nPaymentRequested event is generated, this value will be filled\nand unique.\n",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "Amount": {
+                                "type": "number",
+                                "description": "Payment amount",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "PaymentStatus": {
+                                "type": "string",
+                                "description": "Status of the payment",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "Payer": {
+                                "$ref": "#/components/schemas/Party"
+                            },
+                            "Payee": {
+                                "$ref": "#/components/schemas/Party"
+                            },
+                            "IncidentState": {
+                                "type": "string",
+                                "description": "State where the incident took place",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "IncidentDate": {
+                                "type": "string",
+                                "description": "Date when the incident took place",
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "UnknownPaymentSource": {
+                                "type": "object",
+                                "properties": {
+                                    "SourceName": {
+                                        "type": "string",
+                                        "description": "Source of payment initiation process",
+                                        "xml": {
+                                            "prefix": "pay"
+                                        }
+                                    },
+                                    "SourceId": {
+                                        "type": "string",
+                                        "description": "Source Identifier",
+                                        "xml": {
+                                            "prefix": "pay"
+                                        }
+                                    }
+                                },
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            },
+                            "PaymentActivity": {
+                                "type": "object",
+                                "properties": {
+                                    "activity": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "Action": {
+                                                    "type": "string",
+                                                    "description": "The type of activity performed",
+                                                    "xml": {
+                                                        "prefix": "pay"
+                                                    }
+                                                },
+                                                "ActivityDate": {
+                                                    "type": "string",
+                                                    "description": "Date/time when the activity occurred",
+                                                    "xml": {
+                                                        "prefix": "pay"
+                                                    }
+                                                },
+                                                "ResultingStatus": {
+                                                    "type": "string",
+                                                    "description": "Status of the Payment after action",
+                                                    "xml": {
+                                                        "prefix": "pay"
+                                                    }
+                                                }
+                                            },
+                                            "xml": {
+                                                "prefix": "pay"
+                                            }
+                                        },
+                                        "xml": {
+                                            "name": "activity",
+                                            "prefix": "pay",
+                                            "wrapped": true
+                                        }
+                                    }
+                                },
+                                "xml": {
+                                    "prefix": "pay"
+                                }
+                            }
+                        },
+                        "xml": {
+                            "prefix": "pay"
+                        }
+                    }
+                },
+                "xml": {
+                    "name": "Payments",
+                    "namespace": "http://dint.arbfile.org/payment/v2",
+                    "prefix": "pay"
+                }
+            }
+        },
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            }
+        }
+    },
+    "security": [{
+        "basicAuth": []
+    }]
+}

@@ -1,0 +1,60 @@
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:dv5="http://dint.arbfile.org/standard/types/domain/v5"
+    xmlns:adv5="http://dint.arbfile.org/standard/types/domain/arb/v5"
+    xmlns:acv5="http://dint.arbfile.org/standard/commands/arb/v5"
+    xmlns="http://schemas.xmlsoap.org/wsdl/" name="CommandService"
+    targetNamespace="http://dint.arbfile.org/standard/commands/arb/v5">
+    <types>
+        <schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:dv5="http://dint.arbfile.org/standard/types/domain/v5"
+            xmlns:adv5="http://dint.arbfile.org/standard/types/domain/arb/v5"
+            xmlns:acv5="http://dint.arbfile.org/standard/commands/arb/v5"
+            xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://dint.arbfile.org/standard/commands/arb/v5"
+                schemaLocation="https://dint.arbfile.org/dint-soap-web/xsd/standard/ng/commands/arb/v5/AFArbCommand.xsd" />
+            <import namespace="http://dint.arbfile.org/standard/types/domain/arb/v5"
+                schemaLocation="https://dint.arbfile.org/dint-soap-web/xsd/standard/ng/types/domain/arb/v5/AFArbDomain.xsd" />
+            <import namespace="http://dint.arbfile.org/standard/types/domain/v5"
+                schemaLocation="https://dint.arbfile.org/dint-soap-web/xsd/standard/ng/types/domain/v5/AFDomain.xsd" />
+        </schema>
+    </types>
+    <message name="ProcessCommandResponse">
+        <part element="dv5:Response" name="Response"> </part>
+    </message>
+    <message name="ProcessCommand">
+        <part element="acv5:AFCommand" name="PaymentCommand"> </part>
+    </message>
+    <message name="ProcessCommandException">
+        <part element="dv5:FaultResponse" name="FaultResponse"> </part>
+    </message>
+    <portType name="StandardV5ArbServiceBean">
+        <operation name="ProcessCommand">
+            <input message="acv5:ProcessCommand"> </input>
+            <output message="acv5:ProcessCommandResponse"> </output>
+            <fault message="acv5:ProcessCommandException" name="ProcessCommandException"> </fault>
+        </operation>
+    </portType>
+    <binding name="StandardV5ArbServiceSoapBinding" type="acv5:StandardV5ArbServiceBean">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="ProcessCommand">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="ProcessCommandException">
+                <soap:fault name="ProcessCommandException" use="literal" />
+            </fault>
+        </operation>
+    </binding>
+    <service name="StandardV5ArbService">
+        <port binding="acv5:StandardV5ArbServiceSoapBinding" name="StandardV5ArbServicePort">
+            <soap:address
+                location="https://dint.arbfile.org/dint-soap-web/soap/standard/v5/arb/CommandService" />
+        </port>
+    </service>
+</definitions>

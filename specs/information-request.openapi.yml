@@ -1,0 +1,1412 @@
+openapi: 3.0.3
+info:
+  title: Information Request (REST)
+  version: 1.0.0
+  description: 'API generated from XSD schema: http://dint.arbfile.org/standard/v4'
+paths:
+  "/v2/companies":
+    get:
+      tags:
+      - Dev
+      - Dev01
+      - REST
+      summary: Retrieve list of companies
+      description: Retrieve list of companies
+      operationId: getCompanies
+      parameters:
+      - name: all
+        in: query
+        description: When set to true, the service will return all the records for
+          member companies
+        schema:
+          enum:
+          - 'true'
+          type: string
+      - name: download
+        in: query
+        description: When set to true, downloads the companies.xml file
+        schema:
+          enum:
+          - 'true'
+          type: string
+      - name: cocodes
+        in: query
+        description: To retrieve company-specific records; this parameter can take
+          a comma separated list
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        description: To retrieve the company records, which were updated on or after
+          given date
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        description: To retrieve the company records, which were updated on or before
+          the given date
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of companies with subsidiaries and program info
+          content:
+            application/xml:
+              schema:
+                "$ref": "#/components/schemas/Companies"
+              example: |
+                <Companies xmlns="http://dint.arbfile.org/reference/v2">
+                    <Company
+                        id="2045130000">
+                        <Name>ALPHA INSURANCE CO</Name>
+                        <Active>true</Active>
+                        <Cocode>04513</Cocode>
+                        <LiabilityCoverage>true</LiabilityCoverage>
+                        <UpdatedDate>2024-02-13T16:43:30.000</UpdatedDate>
+                        <Subsidiary id="1045130002">
+                            <Name>ALPHA INSURANCE OF FLORIDA</Name>
+                            <Active>true</Active>
+                            <LiabilityCoverage>true</LiabilityCoverage>
+                            <UpdatedDate>2022-12-06T18:20:00.000</UpdatedDate>
+                            <Subsid>0002</Subsid>
+                            <TotalRecoverySolution>
+                                <Active>true</Active>
+                                <EffectiveDate>2017-01-17T00:00:00.000</EffectiveDate>
+                            </TotalRecoverySolution>
+                            <ArbPrograms>
+                                <Program>
+                                    <Name>Automobile</Name>
+                                    <Code>A</Code>
+                                    <Active>true</Active>
+                                    <ActiveDate>2006-01-01T00:00:00.000</ActiveDate>
+                                </Program>
+                                <Program>
+                                    <Name>Medpay</Name>
+                                    <Code>M</Code>
+                                    <Active>true</Active>
+                                    <ActiveDate>2006-01-01T00:00:00.000</ActiveDate>
+                                </Program>
+                            </ArbPrograms>
+                        </Subsidiary>
+                    </Company>
+                </Companies>
+  "/evidencetypes":
+    get:
+      tags:
+      - Dev
+      - Dev01
+      - REST
+      summary: Get evidence types
+      description: Get evidence types
+      operationId: getEvidenceTypes
+      parameters:
+      - name: all
+        in: query
+        description: "When set to “true”, the service will return all the records
+          for the supported evidence \ntypes under all the domains."
+        schema:
+          enum:
+          - 'true'
+          - 'false'
+          type: string
+      - name: domain
+        in: query
+        description: "When setting the value to the valid domain name, the service
+          will return all the \nrecords for the supported evidence types under the
+          given domain."
+        schema:
+          enum:
+          - E-SUBROHUB
+          - DOCUMENT-SHARING
+          - TRS
+          type: string
+      responses:
+        '200':
+          description: A list of evidence types
+          content:
+            application/xml:
+              schema:
+                "$ref": "#/components/schemas/EvidenceTypes"
+              example: |
+                <EvidenceTypes xmlns="http://dint.arbfile.org/reference/v1">
+                    <EvidenceType>
+                        <DomainType>DOCUMENT-SHARING</DomainType>
+                        <DocumentTypes>
+                            <DocumentType>Appraisal</DocumentType>
+                            <DocumentType>BillofLadings</DocumentType>
+                            <DocumentType>BriefofLaw</DocumentType>
+                            <DocumentType>Contract</DocumentType>
+                            <DocumentType>EmployeeStatement</DocumentType>
+                            <DocumentType>EngineerReport</DocumentType>
+                            <DocumentType>ExplanationofBenefits</DocumentType>
+                            <DocumentType>FireMarshallReport</DocumentType>
+                            <DocumentType>InterCompanyReimbursementNotificationForm</DocumentType>
+                            <DocumentType>InvestigativeReport</DocumentType>
+                            <DocumentType>ListofContents</DocumentType>
+                            <DocumentType>MedicalBills</DocumentType>
+                            <DocumentType>MedicalReports</DocumentType>
+                            <DocumentType>MedpayLedger</DocumentType>
+                            <DocumentType>NoticeofLien</DocumentType>
+                            <DocumentType>OriginAndCauseReport</DocumentType>
+                            <DocumentType>PIPApplication</DocumentType>
+                            <DocumentType>ProofofLitigationFiling</DocumentType>
+                            <DocumentType>ProofofLoss</DocumentType>
+                            <DocumentType>PurchaseInvoice</DocumentType>
+                            <DocumentType>ReleaseForm</DocumentType>
+                            <DocumentType>ShippingReportPostInspection</DocumentType>
+                            <DocumentType>ShippingReportPreInspection</DocumentType>
+                            <DocumentType>WageVerification</DocumentType>
+                        </DocumentTypes>
+                    </EvidenceType>
+                    <EvidenceType>
+                        <DomainType>OLF-AUTO</DomainType>
+                        <DocumentTypes>
+                            <DocumentType>AccidentReport</DocumentType>
+                            <DocumentType>AdjustersNotes</DocumentType>
+                            <DocumentType>ApplicantRecordedStatement</DocumentType>
+                            <DocumentType>ApplicantWrittenStatement</DocumentType>
+                            <DocumentType>BailmentForm</DocumentType>
+                            <DocumentType>CaseLaw</DocumentType>
+                            <DocumentType>CoverageDenialLetter</DocumentType>
+                            <DocumentType>ComputerizedVehicleRegistrationFee</DocumentType>
+                            <DocumentType>Deductible</DocumentType>
+                            <DocumentType>DenialLetter</DocumentType>
+                            <DocumentType>DiminishedValueDocumentation</DocumentType>
+                            <DocumentType>Estimate</DocumentType>
+                            <DocumentType>ExpertReport</DocumentType>
+                            <DocumentType>LossofUseProvision</DocumentType>
+                            <DocumentType>MotorVehicleAccidentReport</DocumentType>
+                            <DocumentType>Other</DocumentType>
+                            <DocumentType>PaymentHistory</DocumentType>
+                            <DocumentType>Photograph</DocumentType>
+                            <DocumentType>PoliceReport</DocumentType>
+                            <DocumentType>PolicyCancellationLetter</DocumentType>
+                            <DocumentType>PolicyDeclarations</DocumentType>
+                            <DocumentType>PolicyLanguage</DocumentType>
+                            <DocumentType>ProofofDamages</DocumentType>
+                            <DocumentType>ProofofPayment</DocumentType>
+                            <DocumentType>RentalAgreement</DocumentType>
+                            <DocumentType>RentalBillReceipt</DocumentType>
+                            <DocumentType>ReservationofRightsLetter</DocumentType>
+                            <DocumentType>RespondentRecordedStatement</DocumentType>
+                            <DocumentType>RespondentWrittenStatement</DocumentType>
+                            <DocumentType>RulesoftheRoad</DocumentType>
+                            <DocumentType>SalvageInvoice</DocumentType>
+                            <DocumentType>SalvageReport</DocumentType>
+                            <DocumentType>SceneDiagram</DocumentType>
+                            <DocumentType>ScenePhotograph</DocumentType>
+                            <DocumentType>Statement</DocumentType>
+                            <DocumentType>Statute</DocumentType>
+                            <DocumentType>SupplementPayments</DocumentType>
+                            <DocumentType>TotalLossEvaluation</DocumentType>
+                            <DocumentType>TowandorStorageBill</DocumentType>
+                            <DocumentType>VehicleDamagePhotos</DocumentType>
+                            <DocumentType>Video</DocumentType>
+                            <DocumentType>WitnessRecordedStatement</DocumentType>
+                            <DocumentType>WitnessWrittenStatement</DocumentType>
+                            <DocumentType>WrittenConsentLetter</DocumentType>
+                        </DocumentTypes>
+                    </EvidenceType>
+                </EvidenceTypes>
+  "/mimetypes":
+    get:
+      summary: Get supported mime types
+      description: Returns a list of supported file types and their associated mime
+        types.
+      operationId: get-mimetypes
+      parameters:
+      - name: all
+        in: query
+        description: When set to "true", the service will return all the records for
+          the supported MIME types.
+        schema:
+          enum:
+          - 'true'
+          type: string
+          default: 'true'
+      responses:
+        '200':
+          description: A list of supported mime types in XML format
+          content:
+            application/xml:
+              schema:
+                "$ref": "#/components/schemas/ContentTypes"
+              example: |
+                <ContentTypes xmlns="http://dint.arbfile.org/reference/v1">
+                    <FileType>
+                        <Type>image</Type>
+                        <Active>true</Active>
+                        <MaxSize>41943040</MaxSize>
+                        <MimeTypes>
+                            <MimeType>image/pjpeg</MimeType>
+                            <MimeType>image/tiff</MimeType>
+                            <MimeType>image/jpeg</MimeType>
+                            <MimeType>image/x-ms-bmp</MimeType>
+                            <MimeType>image/bmp</MimeType>
+                            <MimeType>image/png</MimeType>
+                            <MimeType>image/x-bmp</MimeType>
+                            <MimeType>image/tiff2</MimeType>
+                            <MimeType>image/pipeg</MimeType>
+                            <MimeType>image/gif</MimeType>
+                            <MimeType>image/x-png</MimeType>
+                            <MimeType>image/x-tif</MimeType>
+                        </MimeTypes>
+                    </FileType>
+                    <FileType>
+                        <Type>text</Type>
+                        <Active>true</Active>
+                        <MaxSize>41943040</MaxSize>
+                        <MimeTypes>
+                            <MimeType>application/vnd.openxmlformats-officedocument.presentationml.presentation</MimeType>
+                            <MimeType>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</MimeType>
+                            <MimeType>application/vnd.openxmlformats-officedocument.spreadsheetml.template</MimeType>
+                            <MimeType>application/vnd.ms-excel.addin.macroEnabled.12</MimeType>
+                            <MimeType>application/vnd.ms-excel.sheet.binary.macroEnabled.12</MimeType>
+                            <MimeType>application/vnd.ms-powerpoint</MimeType>
+                            <MimeType>application/msword</MimeType>
+                            <MimeType>application/vnd.ms-word.document.macroEnabled.12</MimeType>
+                            <MimeType>application/vnd.ms-powerpoint.addin.macroEnabled.12</MimeType>
+                            <MimeType>application/postscript</MimeType>
+                            <MimeType>text/plain</MimeType>
+                            <MimeType>application/vnd.ms-powerpoint.presentation.macroEnabled.12</MimeType>
+                            <MimeType>application/vnd.ms-excel.sheet.macroEnabled.12</MimeType>
+                            <MimeType>application/vnd.openxmlformats-officedocument.presentationml.template</MimeType>
+                            <MimeType>application/vnd.ms-works</MimeType>
+                            <MimeType>application/pdf</MimeType>
+                            <MimeType>application/vnd.openxmlformats-officedocument.wordprocessingml.document</MimeType>
+                            <MimeType>application/vnd.ms-excel.template.macroEnabled.12</MimeType>
+                            <MimeType>application/vnd.openxmlformats-officedocument.presentationml.slideshow</MimeType>
+                            <MimeType>text/html</MimeType>
+                            <MimeType>text/richtext</MimeType>
+                            <MimeType>application/vnd.ms-excel</MimeType>
+                            <MimeType>application/vnd.openxmlformats-officedocument.wordprocessingml.template</MimeType>
+                        </MimeTypes>
+                    </FileType>
+                    <FileType>
+                        <Type>video</Type>
+                        <Active>true</Active>
+                        <MaxSize>41943040</MaxSize>
+                        <MimeTypes>
+                            <MimeType>video/x-msvideo</MimeType>
+                            <MimeType>video/webm</MimeType>
+                            <MimeType>video/mp4</MimeType>
+                            <MimeType>video/avi</MimeType>
+                            <MimeType>video/dvd</MimeType>
+                            <MimeType>video/mpeg</MimeType>
+                            <MimeType>video/x-ms-wmv</MimeType>
+                            <MimeType>video/3gpp</MimeType>
+                            <MimeType>video/x-m4v</MimeType>
+                            <MimeType>video/mpeg4</MimeType>
+                            <MimeType>video/quicktime</MimeType>
+                            <MimeType>video/ogg</MimeType>
+                        </MimeTypes>
+                    </FileType>
+                </ContentTypes>
+  "/sesCompanies":
+    get:
+      tags:
+      - Dev
+      - Dev01
+      - REST
+      summary: Retrieve SES companies
+      description: Returns a list of Settlement Exchange System companies with applications
+        and subsidiaries.
+      operationId: get-sescompanies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                "$ref": "#/components/schemas/SESCompanies"
+              example: |
+                <SESCompanies xmlns="http://dint.arbfile.org/reference/v1">
+                    <SESCompany>
+                        <Name>BETA INSURANCE CO</Name>
+                        <Cocode>04514</Cocode>
+                        <SESApplications>
+                            <SESApplication>
+                                <Name>ESH</Name>
+                                <EffectiveDate>2018-04-22T00:00:00.000</EffectiveDate>
+                                <ExpirationDate>9999-01-01T00:00:00.000</ExpirationDate>
+                            </SESApplication>
+                        </SESApplications>
+                    </SESCompany>
+                </SESCompanies>
+  "/demand/id/{DemandID}":
+    get:
+      summary: Retrieve a demand by ID
+      description: Retrieve a demand by ID
+      operationId: getDemandById
+      parameters:
+      - name: DemandID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A detailed demand object with party, policy, and incident info
+          content:
+            application/xml:
+              schema:
+                "$ref": "#/components/schemas/Demand"
+              example: |
+                <af:Demand xmlns:af="http://dint.arbfile.org/standard/v1">
+                    <af:DemandId>527921</af:DemandId>
+                    <af:DemandStatus>Issued</af:DemandStatus>
+                    <af:CaseVersion>DhzHOb/Q0i6krwP2erP6Ow==</af:CaseVersion>
+                    <af:AssociatedDemands />
+                    <af:Incident>
+                        <af:IncidentState>FL</af:IncidentState>
+                        <af:IncidentDate>2025-05-08</af:IncidentDate>
+                    </af:Incident>
+                    <af:DemandParties>
+                        <af:DemandParty>
+                            <af:Role>Demander</af:Role>
+                            <af:Company>
+                                <af:Cocode>04513</af:Cocode>
+                                <af:Subsid>0002</af:Subsid>
+                                <af:Name>ALPHA INSURANCE OF FLORIDA</af:Name>
+                            </af:Company>
+                        </af:DemandParty>
+                        <!-- additional DemandParty entries -->
+                    </af:DemandParties>
+                    <af:DemanderDetails>
+                        <af:ClaimPolicyNumber>sjr202505080206-alpha</af:ClaimPolicyNumber>
+                        <af:Remittance />
+                        <af:Insured>
+                            <af:PersonName>
+                                <af:LastName>REECE</af:LastName>
+                            </af:PersonName>
+                            <af:Type>Personal</af:Type>
+                            <af:IsDriver>false</af:IsDriver>
+                        </af:Insured> <!-- additional DemanderDetails
+                        info -->
+                    </af:DemanderDetails>
+                    <!-- ResponderDetails, Negotiations, etc. -->
+                </af:Demand>
+  "/document/{DocumentID}/{MemberCocode}":
+    get:
+      tags:
+      - Dev
+      - Dev01
+      - REST
+      summary: Get document details
+      description: Get document details
+      operationId: getDocumentById
+      parameters:
+      - name: DocumentID
+        in: path
+        description: Unique identifier for the document
+        required: true
+        schema:
+          type: string
+      - name: MemberCocode
+        in: path
+        description: Member company code
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response returning document in binary.
+components:
+  schemas:
+    CaseVersion:
+      type: string
+      xml:
+        name: CaseVersion
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandId:
+      type: string
+      description: An AF identifier for the demand. This is unique identifier that
+        can be used to identify the demand in the AF system.
+      pattern: ^\d+$
+      xml:
+        name: DemandId
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint100:
+      type: string
+      maxLength: 100
+      xml:
+        name: StringConstraint100
+        namespace: http://dint.arbfile.org/standard/v4
+    CompanyCaseId:
+      type: string
+      description: The identifier used by the receiving company for the demand. This
+        can be optionally supplied by the demander when issuing the demand.
+      pattern: ^\d+$
+      xml:
+        name: CompanyCaseId
+        namespace: http://dint.arbfile.org/standard/v4
+    Incident:
+      type: object
+      properties:
+        IncidentState:
+          $ref: '#/components/schemas/State'
+        IncidentLocation:
+          $ref: '#/components/schemas/StringConstraint100'
+        IncidentCity:
+          $ref: '#/components/schemas/StringConstraint40'
+        IncidentDate:
+          type: string
+          format: date
+          x-nullable: true
+          xml:
+            name: date
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - IncidentState
+      xml:
+        name: Incident
+        namespace: http://dint.arbfile.org/standard/v4
+    AssociatedDemands:
+      type: object
+      description: Information on associated demand.
+      properties:
+        AssociatedDemand:
+          $ref: '#/components/schemas/AssociatedDemand'
+      xml:
+        name: AssociatedDemands
+        namespace: http://dint.arbfile.org/standard/v4
+    AssociatedDemand:
+      type: object
+      oneOf:
+      - type: object
+        properties:
+          DemandId:
+            $ref: '#/components/schemas/DemandId'
+        required:
+        - DemandId
+      - type: object
+        properties:
+          CompanyCaseId:
+            $ref: '#/components/schemas/CompanyCaseId'
+        required:
+        - CompanyCaseId
+      xml:
+        name: AssociatedDemand
+        namespace: http://dint.arbfile.org/standard/v4
+    Demand:
+      type: object
+      description: Demand detail information.
+      properties:
+        DemandId:
+          $ref: '#/components/schemas/DemandId'
+        CompanyCaseId:
+          $ref: '#/components/schemas/CompanyCaseId'
+        DemandStatus:
+          $ref: '#/components/schemas/DemandStatus'
+        CaseVersion:
+          $ref: '#/components/schemas/CaseVersion'
+        AssociatedDemands:
+          $ref: '#/components/schemas/AssociatedDemands'
+        Incident:
+          $ref: '#/components/schemas/Incident'
+        DemandParties:
+          $ref: '#/components/schemas/DemandParties'
+        DemanderDetails:
+          $ref: '#/components/schemas/DemanderDetails'
+        ResponderDetails:
+          $ref: '#/components/schemas/ResponderDetails'
+        Negotiations:
+          $ref: '#/components/schemas/Negotiations'
+        AttachedDocuments:
+          $ref: '#/components/schemas/AttachedDocuments'
+      required:
+      - DemandId
+      - DemandStatus
+      - Incident
+      - DemandParties
+      - DemanderDetails
+      - ResponderDetails
+      - Negotiations
+      xml:
+        name: Demand
+        namespace: http://dint.arbfile.org/standard/v4
+    Negotiations:
+      type: object
+      properties:
+        Negotiation:
+          $ref: '#/components/schemas/Negotiation'
+      xml:
+        name: Negotiations
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandParties:
+      type: object
+      properties:
+        DemandParty:
+          $ref: '#/components/schemas/DemandParty'
+      required:
+      - DemandParty
+      xml:
+        name: DemandParties
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandParty:
+      type: object
+      properties:
+        Role:
+          $ref: '#/components/schemas/DemandPartyRole'
+        Company:
+          $ref: '#/components/schemas/DemandCompany'
+      required:
+      - Role
+      xml:
+        name: DemandParty
+        namespace: http://dint.arbfile.org/standard/v4
+    DemanderDetails:
+      type: object
+      description: Detail information of the demand party.
+      properties:
+        ClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        PolicyNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        InternalReference:
+          $ref: '#/components/schemas/StringConstraint40'
+        LossFacts:
+          $ref: '#/components/schemas/String4000'
+        Remittance:
+          $ref: '#/components/schemas/Remittance'
+        Insured:
+          $ref: '#/components/schemas/Insured'
+        Driver:
+          $ref: '#/components/schemas/Driver'
+        RepresentativeContact:
+          $ref: '#/components/schemas/SubroRepresentativeContact'
+      required:
+      - ClaimNumber
+      - Insured
+      xml:
+        name: DemanderDetails
+        namespace: http://dint.arbfile.org/standard/v4
+    ResponderDetails:
+      type: object
+      description: Detail information of the response party.
+      properties:
+        ClaimNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        PolicyNumber:
+          $ref: '#/components/schemas/StringConstraint40'
+        InternalReference:
+          $ref: '#/components/schemas/StringConstraint40'
+        Insured:
+          $ref: '#/components/schemas/Insured'
+        Driver:
+          $ref: '#/components/schemas/Driver'
+        RepresentativeContact:
+          $ref: '#/components/schemas/SubroRepresentativeContact'
+      xml:
+        name: ResponderDetails
+        namespace: http://dint.arbfile.org/standard/v4
+    Remittance:
+      type: object
+      description: Type to describe remittance information for a party
+      properties:
+        RemitTo:
+          $ref: '#/components/schemas/Cocode'
+        Address:
+          $ref: '#/components/schemas/Address'
+        Phone:
+          $ref: '#/components/schemas/Phone'
+      xml:
+        name: Remittance
+        namespace: http://dint.arbfile.org/standard/v4
+    Insured:
+      type: object
+      description: Insured information.
+      properties:
+        Type:
+          $ref: '#/components/schemas/InsuredType'
+        IsDriver:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        LineOfInsurance:
+          $ref: '#/components/schemas/LineOfInsurance'
+      required:
+      - Type
+      oneOf:
+      - type: object
+        properties:
+          PersonName:
+            type: object
+            properties:
+              FirstName:
+                $ref: '#/components/schemas/StringConstraint40'
+              LastName:
+                $ref: '#/components/schemas/StringConstraint40'
+            required:
+            - LastName
+        required:
+        - PersonName
+      - type: object
+        properties:
+          Company:
+            $ref: '#/components/schemas/StringConstraint40'
+        required:
+        - Company
+      xml:
+        name: Insured
+        namespace: http://dint.arbfile.org/standard/v4
+    InsuredType:
+      type: string
+      description: Type indicates if coverage is personal or commercial
+      enum:
+      - Commercial
+      - Personal
+      xml:
+        name: InsuredType
+        namespace: http://dint.arbfile.org/standard/v4
+    LineOfInsurance:
+      type: string
+      description: Line of Insurance indicates if coverage is Auto Liability or General
+        Liability and is used for Special program cases
+      enum:
+      - AutoLiability
+      - GeneralLiability
+      xml:
+        name: LineOfInsurance
+        namespace: http://dint.arbfile.org/standard/v4
+    Driver:
+      type: object
+      description: Driver information.
+      properties:
+        FirstName:
+          $ref: '#/components/schemas/StringConstraint40'
+        LastName:
+          $ref: '#/components/schemas/StringConstraint40'
+        Bailment:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        Vehicle:
+          $ref: '#/components/schemas/Vehicle'
+      xml:
+        name: Driver
+        namespace: http://dint.arbfile.org/standard/v4
+    Vehicle:
+      type: object
+      description: Vehicle information.
+      properties:
+        Year:
+          $ref: '#/components/schemas/Year'
+        Make:
+          $ref: '#/components/schemas/StringConstraint40'
+        Model:
+          $ref: '#/components/schemas/StringConstraint40'
+        PlateNumber:
+          $ref: '#/components/schemas/StringConstraint10'
+        PlateState:
+          $ref: '#/components/schemas/State'
+      xml:
+        name: Vehicle
+        namespace: http://dint.arbfile.org/standard/v4
+    SubroRepresentativeContact:
+      type: object
+      description: Representative contact information for Subrogation.
+      properties:
+        FullName:
+          $ref: '#/components/schemas/StringConstraint100'
+        Address:
+          $ref: '#/components/schemas/Address'
+        Email:
+          $ref: '#/components/schemas/Email'
+        Phone:
+          $ref: '#/components/schemas/Phone'
+      xml:
+        name: SubroRepresentativeContact
+        namespace: http://dint.arbfile.org/standard/v4
+    Address:
+      type: object
+      description: Address information.
+      properties:
+        Address1:
+          $ref: '#/components/schemas/StringConstraint256'
+        Address2:
+          $ref: '#/components/schemas/StringConstraint256'
+        Attention:
+          $ref: '#/components/schemas/StringConstraint100'
+        City:
+          $ref: '#/components/schemas/StringConstraint100'
+        State:
+          $ref: '#/components/schemas/State'
+        Zip:
+          $ref: '#/components/schemas/StringConstraint20'
+        Country:
+          $ref: '#/components/schemas/StringConstraint03'
+      xml:
+        name: Address
+        namespace: http://dint.arbfile.org/standard/v4
+    Email:
+      type: string
+      description: Email address.
+      xml:
+        name: Email
+        namespace: http://dint.arbfile.org/standard/v4
+    Negotiation:
+      type: object
+      description: Negotiation information.
+      properties:
+        FromParty:
+          $ref: '#/components/schemas/DemandPartyRole'
+        ToParty:
+          $ref: '#/components/schemas/DemandPartyRole'
+        RentalExpense:
+          $ref: '#/components/schemas/Money'
+        TowingExpense:
+          $ref: '#/components/schemas/Money'
+        OtherExpense:
+          $ref: '#/components/schemas/Money'
+        OtherDescription:
+          $ref: '#/components/schemas/StringConstraint100'
+        Deductible:
+          $ref: '#/components/schemas/Money'
+        TotalLoss:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        SalvageAmount:
+          $ref: '#/components/schemas/Money'
+        LiabilityPercent:
+          $ref: '#/components/schemas/Percent'
+        AdmitLiability:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        DemandOverride:
+          type: boolean
+          x-nullable: true
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        TotalDemand:
+          $ref: '#/components/schemas/Money'
+        Message:
+          $ref: '#/components/schemas/String4000'
+        streamId:
+          type: string
+          minimum: -9223372036854775808
+          maximum: 9223372036854775807
+          xml:
+            name: streamId
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+        negotiationId:
+          type: string
+          minimum: -9223372036854775808
+          maximum: 9223372036854775807
+          xml:
+            name: negotiationId
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+        createdDate:
+          type: string
+          format: date
+          xml:
+            name: createdDate
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+        negotiationType:
+          type: string
+          enum:
+          - AcceptedDemander
+          - AcceptedResponder
+          - AcceptancePendingDemander
+          - AcceptancePendingResponder
+          - AcknowledgeDemanderAcceptance
+          - AddEvidenceDemander
+          - AddEvidenceResponder
+          - AddMessageDemander
+          - AddMessageResponder
+          - Amended
+          - ArbitrationResponseSubmitted
+          - ArbitrationSubmitted
+          - ClearMessageFlagDemander
+          - ClearMessageFlagResponder
+          - Closed
+          - CounteredDemander
+          - CounteredResponder
+          - CounteredWithReducedPayment
+          - Denied
+          - EditedDamages
+          - EditEvidenceDemander
+          - EditEvidenceResponder
+          - FirstNoticeOfLoss
+          - Initial
+          - Investigation
+          - Issued
+          - ManuallySettled
+          - New
+          - Other
+          - OwnershipRejected
+          - PaymentIDGenerationError
+          - PaymentSent
+          - PendingDemander
+          - PendingResponder
+          - ReducedPayment
+          - RejectedPayment
+          - Reopened
+          - ReplyToRequestDemander
+          - ReplyToRequestResponder
+          - RequestForInformationDemander
+          - RequestForInformationResponder
+          - ResponderPaymentApprovalNotReceived
+          - Revised
+          - SentToArbitration
+          - SupplementEntered
+          - SupplementIssued
+          xml:
+            name: negotiationType
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+      required:
+      - FromParty
+      - ToParty
+      oneOf:
+      - type: object
+        properties:
+          AutoDamages:
+            $ref: '#/components/schemas/Money'
+      - type: object
+        properties:
+          Comprehensive:
+            $ref: '#/components/schemas/Money'
+      xml:
+        name: Negotiation
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandCompany:
+      type: object
+      description: Demand party company information.
+      properties:
+        Cocode:
+          $ref: '#/components/schemas/Cocode'
+        Subsid:
+          $ref: '#/components/schemas/CompanySubsidCode'
+        Name:
+          xml:
+            name: string
+            namespace: http://dint.arbfile.org/standard/v4
+      required:
+      - Cocode
+      - Name
+      xml:
+        name: DemandCompany
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandPartyRole:
+      type: string
+      enum:
+      - Demander
+      - Responder
+      - ThirdPartyDemander
+      - ThirdPartyResponder
+      - Vendor
+      xml:
+        name: DemandPartyRole
+        namespace: http://dint.arbfile.org/standard/v4
+    Cocode:
+      type: string
+      description: AF assigned company code.
+      minLength: 5
+      maxLength: 5
+      pattern: ^\d{5}$
+      xml:
+        name: Cocode
+        namespace: http://dint.arbfile.org/standard/v4
+    AttachedDocuments:
+      type: object
+      properties:
+        AttachedDocument:
+          $ref: '#/components/schemas/AttachedDocument'
+      xml:
+        name: AttachedDocuments
+        namespace: http://dint.arbfile.org/standard/v4
+    DocumentContent:
+      type: object
+      description: Information on the content of the documents.
+      properties:
+        ContentType:
+          $ref: '#/components/schemas/ContentType'
+        ref:
+          type: string
+          xml:
+            name: ref
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+      required:
+      - ContentType
+      - ref
+      oneOf:
+      - type: object
+        properties:
+          Uri:
+            type: string
+            format: uri
+            xml:
+              name: anyURI
+              namespace: http://dint.arbfile.org/standard/v4
+        required:
+        - Uri
+      - type: object
+        properties:
+          File:
+            xml:
+              name: string
+              namespace: http://dint.arbfile.org/standard/v4
+        required:
+        - File
+      - type: object
+        properties:
+          BinaryContent:
+            $ref: '#/components/schemas/BinaryContent'
+        required:
+        - BinaryContent
+      xml:
+        name: DocumentContent
+        namespace: http://dint.arbfile.org/standard/v4
+    NonEmptyBase64Binary:
+      type: string
+      minLength: 1
+      xml:
+        name: NonEmptyBase64Binary
+        namespace: http://dint.arbfile.org/standard/v4
+    BinaryContent:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/NonEmptyBase64Binary'
+      properties:
+        href:
+          type: string
+          format: uri
+          xml:
+            name: href
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+      xml:
+        name: BinaryContent
+        namespace: http://dint.arbfile.org/standard/v4
+    AttachedDocument:
+      type: object
+      properties:
+        CreatedByRole:
+          $ref: '#/components/schemas/DemandPartyRole'
+        OriginalFileName:
+          $ref: '#/components/schemas/StringConstraint255'
+        IsPublic:
+          type: boolean
+          xml:
+            name: boolean
+            namespace: http://dint.arbfile.org/standard/v4
+        LogicalDocuments:
+          $ref: '#/components/schemas/LogicalDocuments'
+        DocumentContent:
+          $ref: '#/components/schemas/DocumentContent'
+        id:
+          type: string
+          xml:
+            name: id
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+        streamId:
+          type: string
+          minimum: -9223372036854775808
+          maximum: 9223372036854775807
+          xml:
+            name: streamId
+            namespace: http://dint.arbfile.org/standard/v4
+            attribute: true
+      required:
+      - CreatedByRole
+      - IsPublic
+      - LogicalDocuments
+      - id
+      - streamId
+      xml:
+        name: AttachedDocument
+        namespace: http://dint.arbfile.org/standard/v4
+    LogicalDocuments:
+      type: object
+      properties:
+        LogicalDocument:
+          $ref: '#/components/schemas/LogicalDocument'
+      required:
+      - LogicalDocument
+      xml:
+        name: LogicalDocuments
+        namespace: http://dint.arbfile.org/standard/v4
+    LogicalDocument:
+      type: object
+      properties:
+        DocumentType:
+          $ref: '#/components/schemas/DocumentType'
+        DocumentDescription:
+          $ref: '#/components/schemas/String4000'
+      required:
+      - DocumentType
+      xml:
+        name: LogicalDocument
+        namespace: http://dint.arbfile.org/standard/v4
+    DocumentType:
+      type: string
+      xml:
+        name: DocumentType
+        namespace: http://dint.arbfile.org/standard/v4
+    Company:
+      type: object
+      description: Type for company and subsidiary information
+      properties:
+        CoCode:
+          $ref: '#/components/schemas/Cocode'
+        Name:
+          $ref: '#/components/schemas/StringConstraint40'
+        Subsidiary:
+          $ref: '#/components/schemas/Subsidiary'
+      xml:
+        name: Company
+        namespace: http://dint.arbfile.org/standard/v4
+    Subsidiary:
+      type: object
+      description: Type to describe a company's subsidiary information
+      properties:
+        Subsid:
+          $ref: '#/components/schemas/CompanySubsidCode'
+        Name:
+          $ref: '#/components/schemas/StringConstraint40'
+      xml:
+        name: Subsidiary
+        namespace: http://dint.arbfile.org/standard/v4
+    DemandStatus:
+      type: string
+      description: Status of the demand
+      enum:
+      - AcceptancePending
+      - Accepted
+      - Closed
+      - Denied
+      - FirstNoticeOfSubrogation
+      - InArbitration
+      - InNegotiation
+      - Issued
+      - New
+      - Pending
+      - ReducedPaymentPending
+      - Settled
+      - Unknown
+      xml:
+        name: DemandStatus
+        namespace: http://dint.arbfile.org/standard/v4
+    Money:
+      oneOf:
+      - type: number
+        minimum: -99999999.99
+        maximum: 99999999.99
+        multipleOf: 0.01
+      - type: string
+        minLength: 0
+        maxLength: 0
+      xml:
+        name: Money
+        namespace: http://dint.arbfile.org/standard/v4
+    Percent:
+      oneOf:
+      - type: integer
+        minimum: -999
+        maximum: 999
+      - type: string
+        minLength: 0
+        maxLength: 0
+      xml:
+        name: Percent
+        namespace: http://dint.arbfile.org/standard/v4
+    Year:
+      type: string
+      maxLength: 4
+      xml:
+        name: Year
+        namespace: http://dint.arbfile.org/standard/v4
+    CompanySubsidCode:
+      type: string
+      xml:
+        name: CompanySubsidCode
+        namespace: http://dint.arbfile.org/standard/v4
+    State:
+      type: string
+      maxLength: 2
+      xml:
+        name: State
+        namespace: http://dint.arbfile.org/standard/v4
+    Phone:
+      type: string
+      maxLength: 30
+      xml:
+        name: Phone
+        namespace: http://dint.arbfile.org/standard/v4
+    String4000:
+      type: string
+      maxLength: 4000
+      xml:
+        name: String4000
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint03:
+      type: string
+      maxLength: 3
+      xml:
+        name: StringConstraint03
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint10:
+      type: string
+      maxLength: 10
+      xml:
+        name: StringConstraint10
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint20:
+      type: string
+      maxLength: 20
+      xml:
+        name: StringConstraint20
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint40:
+      type: string
+      maxLength: 40
+      xml:
+        name: StringConstraint40
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint255:
+      type: string
+      maxLength: 255
+      xml:
+        name: StringConstraint255
+        namespace: http://dint.arbfile.org/standard/v4
+    StringConstraint256:
+      type: string
+      maxLength: 256
+      xml:
+        name: StringConstraint256
+        namespace: http://dint.arbfile.org/standard/v4
+    ContentType:
+      type: string
+      xml:
+        name: ContentType
+        namespace: http://dint.arbfile.org/standard/v4
+    Companies:
+      type: object
+      properties:
+        Company:
+          $ref: '#/components/schemas/Company'
+      description: Collection of Company Objects.
+      xml:
+        name: Companies
+    ContentTypes:
+      type: object
+      properties:
+        FileType:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileType'
+          description: Collection of a File Types
+          xml:
+            name: FileType
+            wrapped: true
+      description: Collection of ContentTypes (Occurs 1 - many)
+      xml:
+        name: ContentTypes
+        namespace: 'http://dint.arbfile.org/reference/v1'
+    FileType:
+      type: object
+      properties:
+        Type:
+          type: string
+          description: 'Represents the file type such as text, image, audio, and video.'
+          xml:
+            name: Type
+        Active:
+          type: boolean
+          description: Indicates if the file type is active or inactive.
+          xml:
+            name: Active
+        MaxSize:
+          type: integer
+          description: Maximum size supported for particular file types in bytes.
+          format: int64
+          xml:
+            name: MaxSize
+        MimeTypes:
+          $ref: '#/components/schemas/MimeTypes'
+      description: Object representation of a File Type
+      xml:
+        name: FileType
+    MimeTypes:
+      type: object
+      properties:
+        MimeType:
+          type: array
+          items:
+            type: string
+          description: 'Lists suppored MIME type, i.e., application/pdf'
+          xml:
+            name: MimeType
+            wrapped: true
+      description: Collection of Mime Types (Occurs 1- many)
+      xml:
+        name: MimeTypes
+    SESCompanies:
+      type: object
+      properties:
+        SESCompany:
+          type: array
+          items:
+            $ref: '#/components/schemas/SESCompany'
+          description: The Settlement Exchange System Comapany's Name.
+          xml:
+            wrapped: true
+      description: Collection of Settlement Exchange System Companies
+      xml:
+        name: SESCompanies
+        namespace: 'http://dint.arbfile.org/reference/v1'
+    SESApplications:
+      type: object
+      properties:
+        SESApplication:
+          type: array
+          items:
+            $ref: '#/components/schemas/SESApplication'
+          description: A Settlement Exchange System Application.
+          xml:
+            wrapped: true
+      description: Collection of Settlement Exchange System Applications.
+      xml:
+        name: SESApplications
+    SESSubsidiaries:
+      type: object
+      properties:
+        SESSubsidiary:
+          type: array
+          items:
+            $ref: '#/components/schemas/SESSubsidiary'
+          description: Object representation of a Settlement Exchange System Subsidiary
+          xml:
+            wrapped: true
+      description: Collection of Settlement Exchange System Subsidiaries
+      xml:
+        name: SESSubsidiaries
+    SESCompany:
+      required:
+        - Name
+        - Cocode
+      type: object
+      properties:
+        Name:
+          type: string
+          description: The Settlement Exchange System Comapany's Name.
+          xml:
+            name: Name
+        Cocode:
+          type: string
+          description: The requester company cocode.
+          xml:
+            name: Cocode
+        SESApplications:
+          $ref: '#/components/schemas/SESApplications'
+        SESSubsidiaries:
+          $ref: '#/components/schemas/SESSubsidiaries'
+      description: Object representation of a Settlement Exchange System Company.
+      xml:
+        name: SESCompany
+    EvidenceTypes:
+      type: object
+      properties:
+        EvidenceType:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+          description: Collection of EvidenceTypes (Occurs 1 - many)
+          xml: {}
+      description: Collection of Evidence Types
+      xml:
+        name: EvidenceTypes
+        namespace: 'http://dint.arbfile.org/reference/v1'
+    EvidenceType:
+      type: object
+      properties:
+        DomainType:
+          type: string
+          description: 'Represents the domain type such as E-SUBROHUB, TRS, etc.'
+          xml:
+            name: DomainType
+        DocumentTypes:
+          $ref: '#/components/schemas/DocumentTypes'
+      description: Collection of EvidenceTypes (Occurs 1 - many)
+      xml:
+        name: EvidenceType
+    DocumentTypes:
+      type: object
+      properties:
+        DocumentType:
+          type: array
+          items:
+            type: string
+          description: 'Represents the domain type such as E-SUBROHUB, TRS, etc.'
+          xml:
+            name: DocumentType
+      description: Collection of Document Types
+      xml:
+        name: DocumentTypes
+    SESApplication:
+      required:
+        - Name
+        - EffectiveDate
+        - ExpirationDate
+      type: object
+      properties:
+        Name:
+          type: string
+          description: The name of the SES Application.
+          xml:
+            name: Name
+        EffectiveDate:
+          type: string
+          description: temp-placeholder
+          format: date-time
+          xml:
+            name: EffectiveDate
+        ExpirationDate:
+          type: string
+          description: temp-placeholder
+          format: date-time
+          xml:
+            name: ExpirationDate
+      description: A Settlement Exchange System Application.
+      xml:
+        name: SESApplication
+    SESSubsidiary:
+      required:
+        - Name
+        - Subsid
+      type: object
+      properties:
+        Subsid:
+          type: string
+          description: >-
+            An identifier that combined with the cocode identifies the
+            subsidiary.
+          xml:
+            name: Subsid
+        Name:
+          type: string
+          description: The name of the Subsidiary.
+          xml:
+            name: Name
+        SESApplications:
+          $ref: '#/components/schemas/SESApplications'
+      description: Object representation of a Settlement Exchange System Subsidiary
+      xml:
+        name: SESSubsidiary

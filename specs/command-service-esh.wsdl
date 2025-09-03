@@ -1,0 +1,83 @@
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:sdv5="http://dint.arbfile.org/standard/types/domain/subro/v5"
+    xmlns:scv5="http://dint.arbfile.org/standard/commands/subro/v5"
+    xmlns:dv5="http://dint.arbfile.org/standard/types/domain/v5"
+    xmlns="http://schemas.xmlsoap.org/wsdl/" name="CommandService"
+    targetNamespace="http://dint.arbfile.org/standard/commands/subro/v5">
+    <types>
+        <schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+            xmlns:sdv5="http://dint.arbfile.org/standard/types/domain/subro/v5"
+            xmlns:scv5="http://dint.arbfile.org/standard/commands/subro/v5"
+            xmlns:dv5="http://dint.arbfile.org/standard/types/domain/v5"
+            xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://dint.arbfile.org/standard/commands/subro/v5"
+                schemaLocation="https://dint.arbfile.org/dint-soap-web/xsd/standard/ng/commands/subro/v5/AFSubroCommand.xsd" />
+            <import namespace="http://dint.arbfile.org/standard/types/domain/subro/v5"
+                schemaLocation="https://dint.arbfile.org/dint-soap-web/xsd/standard/ng/types/domain/subro/v5/AFSubroDomain.xsd" />
+            <import namespace="http://dint.arbfile.org/standard/types/domain/v5"
+                schemaLocation="https://dint.arbfile.org/dint-soap-web/xsd/standard/ng/types/domain/v5/AFDomain.xsd" />
+        </schema>
+    </types>
+    <message name="ProcessCommandResponse">
+        <part element="dv5:Response" name="Response"> </part>
+    </message>
+    <message name="RefreshDemandResponse">
+        <part element="sdv5:Demand" name="Demand"> </part>
+    </message>
+    <message name="ProcessCommandException">
+        <part element="dv5:FaultResponse" name="FaultResponse"> </part>
+    </message>
+    <message name="ProcessCommand">
+        <part element="scv5:AFCommand" name="PaymentCommand"> </part>
+    </message>
+    <message name="RefreshDemandRequest">
+        <part element="scv5:RefreshDemandRequest" name="RefreshDemandRequest"> </part>
+    </message>
+    <portType name="StandardV5SubroServiceBean">
+        <operation name="ProcessCommand">
+            <input message="scv5:ProcessCommand"> </input>
+            <output message="scv5:ProcessCommandResponse"> </output>
+            <fault message="scv5:ProcessCommandException" name="ProcessCommandException"> </fault>
+        </operation>
+        <operation name="RefreshDemand" parameterOrder="RefreshDemandRequest">
+            <input message="scv5:RefreshDemandRequest"> </input>
+            <output message="scv5:RefreshDemandResponse"> </output>
+            <fault message="scv5:ProcessCommandException" name="CommandException"> </fault>
+        </operation>
+    </portType>
+    <binding name="StandardV5SubroServiceSoapBinding" type="scv5:StandardV5SubroServiceBean">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="ProcessCommand">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="ProcessCommandException">
+                <soap:fault name="ProcessCommandException" use="literal" />
+            </fault>
+        </operation>
+        <operation name="RefreshDemand">
+            <soap:operation soapAction="" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+            <fault name="ProcessCommandException">
+                <soap:fault name="ProcessCommandException" use="literal" />
+            </fault>
+        </operation>
+    </binding>
+    <service name="StandardV5SubroService">
+        <port binding="scv5:StandardV5SubroServiceSoapBinding" name="StandardV5SubroServicePort">
+            <soap:address
+                location="https://dint.arbfile.org/dint-soap-web/soap/standard/v5/subro/CommandService" />
+        </port>
+    </service>
+</definitions>
