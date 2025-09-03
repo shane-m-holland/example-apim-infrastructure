@@ -183,14 +183,14 @@ jobs:
         if [[ "${{ needs.deploy-api.result }}" == "success" ]]; then
           if [[ "${{ needs.post-deployment-test.result }}" == "success" || "${{ needs.post-deployment-test.result }}" == "skipped" ]]; then
             echo "status=success" >> $GITHUB_OUTPUT
-            echo "message=🎉 Config repository API deployment successful" >> $GITHUB_OUTPUT
+            echo "message=Config repository API deployment successful" >> $GITHUB_OUTPUT
           else
             echo "status=warning" >> $GITHUB_OUTPUT  
-            echo "message=⚠️ API deployed from config repo but tests failed" >> $GITHUB_OUTPUT
+            echo "message=API deployed from config repo but tests failed" >> $GITHUB_OUTPUT
           fi
         else
           echo "status=failure" >> $GITHUB_OUTPUT
-          echo "message=❌ Config repository API deployment failed" >> $GITHUB_OUTPUT
+          echo "message=Config repository API deployment failed" >> $GITHUB_OUTPUT
         fi
         
     - name: Post notification
