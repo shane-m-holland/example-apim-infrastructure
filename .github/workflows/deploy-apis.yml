@@ -133,7 +133,7 @@ jobs:
     needs: [determine-environment, build-and-test, validate-config-repo]
     if: needs.determine-environment.outputs.should_deploy == 'true'
     
-    uses: shane-m-holland/azure-apim-bicep/.github/workflows/deploy-api-from-config.yml@deploy-api-from-config
+    uses: shane-m-holland/azure-apim-bicep/.github/workflows/deploy-api-from-config.yml@feature/deploy-api-from-config
     with:
       environment: ${{ needs.determine-environment.outputs.environment }}
       service-name: data-integration
