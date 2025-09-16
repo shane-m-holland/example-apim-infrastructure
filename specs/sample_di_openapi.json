@@ -2,7 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "DINT REST API",
-    "description": "REST API for Data Integration Services"
+    "description": "REST API for Data Integration Services",
+    "version": "1.0"
   },
   "servers": [
     {
