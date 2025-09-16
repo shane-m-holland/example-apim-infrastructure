@@ -4,7 +4,7 @@
 name: Validate Environment Configurations
 
 permissions:
-  contents: read          # Read repository contents
+  contents: read         # Read repository contents
   issues: write          # Comment on issues
   pull-requests: write   # Comment on pull requests
 

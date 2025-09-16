@@ -1,0 +1,1156 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DINT REST API",
+    "description": "REST API for Data Integration Services"
+  },
+  "servers": [
+    {
+      "url": "/dint-rest-web"
+    }
+  ],
+  "paths": {
+    "/rest/service": {
+      "post": {
+        "summary": "Process Subro V5 Command",
+        "operationId": "processCommand",
+        "requestBody": {
+          "description": "AFCommand wrapper",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AFCommand"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AFCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response wrapper",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/companies": {
+      "get": {
+        "operationId": "getCompanies",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cocodes",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/v2/companies": {
+      "get": {
+        "operationId": "getCompanies_1",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cocodes",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/document/demandPackage/{demandPackageId}": {
+      "get": {
+        "operationId": "getDemandPackage",
+        "parameters": [
+          {
+            "name": "demandPackageId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "memberCocode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataSource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/document/{docId}": {
+      "get": {
+        "operationId": "getDocument",
+        "parameters": [
+          {
+            "name": "docId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataSource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/document/{docId}/{memberCocode}": {
+      "get": {
+        "operationId": "getDocument_1",
+        "parameters": [
+          {
+            "name": "docId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "memberCocode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataSource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email/verify/{verificationToken}": {
+      "get": {
+        "operationId": "confirm",
+        "parameters": [
+          {
+            "name": "verificationToken",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "*/*": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/evidencetypes": {
+      "get": {
+        "operationId": "getEvidenceTypes",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "namespace",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/mimetypes": {
+      "get": {
+        "operationId": "getMimeTypes",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/sesCompanies": {
+      "get": {
+        "operationId": "getSESEnabledCompaniesAsOfToday",
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/demand/caseId/{caseId}": {
+      "get": {
+        "operationId": "getDemandByCaseId",
+        "parameters": [
+          {
+            "name": "caseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectCocode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/demand/claimNumber/{claimNumber}/{adverseClaimNumber}": {
+      "get": {
+        "operationId": "getDemandByClaimNumber",
+        "parameters": [
+          {
+            "name": "claimNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adverseClaimNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectCocode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/demand/id/{demandId}": {
+      "get": {
+        "operationId": "getDemandByDemandId",
+        "parameters": [
+          {
+            "name": "demandId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "subjectCocode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/xml": {
+
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "xml": {
+              "name": "errorCode"
+            }
+          },
+          "message": {
+            "type": "string",
+            "xml": {
+              "name": "ErrorMessage"
+            }
+          }
+        },
+        "xml": {
+          "name": "Response",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "AFCommand": {
+        "type": "object",
+        "properties": {
+          "cid": {
+            "type": "integer",
+            "format": "int64",
+            "xml": {
+              "attribute": true
+            }
+          },
+          "requestorGuid": {
+            "type": "string",
+            "xml": {
+              "name": "RequesterGuid"
+            }
+          },
+          "subrogationCommand": {
+            "$ref": "#/components/schemas/SubrogationCommand",
+            "xml": {
+              "name": "SubrogationCommand"
+            }
+          }
+        },
+        "required": [
+          "requestorGuid"
+        ],
+        "xml": {
+          "name": "AFCommand",
+          "namespace": "http://dint.arbfile.org/standard/commands/subro/v5"
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "address1": {
+            "type": "string",
+            "xml": {
+              "name": "Address1"
+            }
+          },
+          "address2": {
+            "type": "string",
+            "xml": {
+              "name": "Address2"
+            }
+          },
+          "attention": {
+            "type": "string",
+            "xml": {
+              "name": "Attention"
+            }
+          },
+          "city": {
+            "type": "string",
+            "xml": {
+              "name": "City"
+            }
+          },
+          "state": {
+            "type": "string",
+            "xml": {
+              "name": "State"
+            }
+          },
+          "zip": {
+            "type": "string",
+            "xml": {
+              "name": "Zip"
+            }
+          },
+          "country": {
+            "type": "string",
+            "xml": {
+              "name": "Country"
+            }
+          }
+        },
+        "xml": {
+          "name": "Address",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "Cocode": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Cocode"
+        }
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "cocode": {
+            "type": "string",
+            "xml": {
+              "name": "CoCode"
+            }
+          },
+          "name": {
+            "type": "string",
+            "xml": {
+              "name": "Name"
+            }
+          },
+          "subsidiary": {
+            "$ref": "#/components/schemas/Subsidiary",
+            "xml": {
+              "name": "Subsidiary"
+            }
+          }
+        },
+        "xml": {
+          "name": "Company",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "xml": {
+              "name": "FirstName"
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "xml": {
+              "name": "LastName"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "xml": {
+              "name": "Address"
+            }
+          },
+          "email": {
+            "type": "string",
+            "xml": {
+              "name": "Email"
+            }
+          },
+          "phone": {
+            "type": "string",
+            "xml": {
+              "name": "Phone"
+            }
+          },
+          "fax": {
+            "type": "string",
+            "xml": {
+              "name": "Fax"
+            }
+          }
+        },
+        "xml": {
+          "name": "Contact",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "DemanderDetails": {
+        "type": "object",
+        "properties": {
+          "companyCaseId": {
+            "type": "string",
+            "xml": {
+              "name": "CompanyCaseId"
+            }
+          },
+          "claimNumber": {
+            "type": "string",
+            "xml": {
+              "name": "ClaimNumber"
+            }
+          },
+          "policyNumber": {
+            "type": "string",
+            "xml": {
+              "name": "PolicyNumber"
+            }
+          },
+          "internalReference": {
+            "type": "string",
+            "xml": {
+              "name": "InternalReference"
+            }
+          },
+          "lossFacts": {
+            "type": "string",
+            "xml": {
+              "name": "LossFacts"
+            }
+          },
+          "remittance": {
+            "$ref": "#/components/schemas/Remittance",
+            "xml": {
+              "name": "Remittance"
+            }
+          },
+          "insured": {
+            "$ref": "#/components/schemas/Insured",
+            "xml": {
+              "name": "Insured"
+            }
+          },
+          "driver": {
+            "$ref": "#/components/schemas/Driver",
+            "xml": {
+              "name": "Driver"
+            }
+          },
+          "representativeContact": {
+            "$ref": "#/components/schemas/Contact",
+            "xml": {
+              "name": "RepresentativeContact"
+            }
+          }
+        },
+        "xml": {
+          "name": "DemanderDetails",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/subro/v5"
+        }
+      },
+      "Driver": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "xml": {
+              "name": "FirstName"
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "xml": {
+              "name": "LastName"
+            }
+          },
+          "isBailment": {
+            "type": "boolean",
+            "xml": {
+              "name": "Bailment"
+            }
+          },
+          "vehicle": {
+            "$ref": "#/components/schemas/Vehicle",
+            "xml": {
+              "name": "Vehicle"
+            }
+          }
+        },
+        "xml": {
+          "name": "Driver",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "Incident": {
+        "type": "object",
+        "properties": {
+          "incidentState": {
+            "type": "string",
+            "xml": {
+              "name": "IncidentState"
+            }
+          },
+          "incidentLocation": {
+            "type": "string",
+            "xml": {
+              "name": "IncidentLocation"
+            }
+          },
+          "incidentCity": {
+            "type": "string",
+            "xml": {
+              "name": "IncidentCity"
+            }
+          },
+          "incidentXMLDate": {
+            "type": "string",
+            "format": "date-time",
+            "xml": {
+              "name": "IncidentDate"
+            }
+          }
+        },
+        "xml": {
+          "name": "Incident",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "Insured": {
+        "type": "object",
+        "properties": {
+          "personName": {
+            "$ref": "#/components/schemas/PersonName",
+            "xml": {
+              "name": "PersonName"
+            }
+          },
+          "company": {
+            "type": "string",
+            "xml": {
+              "name": "Company"
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Commercial",
+              "Personal",
+              "Unknown"
+            ],
+            "xml": {
+              "name": "Type"
+            }
+          },
+          "isDriver": {
+            "type": "boolean",
+            "xml": {
+              "name": "IsDriver"
+            }
+          },
+          "liabilityType": {
+            "type": "string",
+            "enum": [
+              "Auto",
+              "General",
+              "Unknown"
+            ],
+            "xml": {
+              "name": "LiabilityType"
+            }
+          }
+        },
+        "xml": {
+          "name": "Insured",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "PersonName": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "xml": {
+              "name": "FirstName"
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "xml": {
+              "name": "LastName"
+            }
+          }
+        },
+        "xml": {
+          "name": "PersonName",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "Remittance": {
+        "type": "object",
+        "properties": {
+          "remitTo": {
+            "$ref": "#/components/schemas/Cocode",
+            "xml": {
+              "name": "RemitTo"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "xml": {
+              "name": "Address"
+            }
+          },
+          "phone": {
+            "type": "string",
+            "xml": {
+              "name": "Phone"
+            }
+          }
+        },
+        "xml": {
+          "name": "Remittance",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "ResponderDetails": {
+        "type": "object",
+        "properties": {
+          "companyCaseId": {
+            "type": "string",
+            "xml": {
+              "name": "CompanyCaseId"
+            }
+          },
+          "claimNumber": {
+            "type": "string",
+            "xml": {
+              "name": "ClaimNumber"
+            }
+          },
+          "policyNumber": {
+            "type": "string",
+            "xml": {
+              "name": "PolicyNumber"
+            }
+          },
+          "internalReference": {
+            "type": "string",
+            "xml": {
+              "name": "InternalReference"
+            }
+          },
+          "insured": {
+            "$ref": "#/components/schemas/Insured",
+            "xml": {
+              "name": "Insured"
+            }
+          },
+          "driver": {
+            "$ref": "#/components/schemas/Driver",
+            "xml": {
+              "name": "Driver"
+            }
+          },
+          "representativeContact": {
+            "$ref": "#/components/schemas/Contact",
+            "xml": {
+              "name": "RepresentativeContact"
+            }
+          }
+        },
+        "xml": {
+          "name": "ResponderDetails",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/subro/v5"
+        }
+      },
+      "SubrogationCommand": {
+        "type": "object",
+        "properties": {
+          "subrogationSource": {
+            "$ref": "#/components/schemas/SubrogationSource",
+            "xml": {
+              "name": "Source"
+            }
+          },
+          "updateDemandDetails": {
+            "$ref": "#/components/schemas/UpdateDemandDetails",
+            "xml": {
+              "name": "UpdateDemandDetails"
+            }
+          }
+        },
+        "required": [
+          "subrogationSource"
+        ],
+        "xml": {
+          "name": "SubrogationCommand",
+          "namespace": "http://dint.arbfile.org/standard/commands/subro/v5"
+        }
+      },
+      "SubrogationSource": {
+        "type": "object",
+        "properties": {
+          "claimNumber": {
+            "type": "string",
+            "xml": {
+              "name": "SubjectClaimNumber"
+            }
+          },
+          "internalReference": {
+            "type": "string",
+            "xml": {
+              "name": "SubjectInternalReference"
+            }
+          },
+          "adverseClaimNumber": {
+            "type": "string",
+            "xml": {
+              "name": "AdverseClaimNumber"
+            }
+          },
+          "SubjectCompanyCaseId": {
+            "type": "string"
+          },
+          "DemandId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "HandlingCocode": {
+            "type": "string"
+          },
+          "SubjectCocode": {
+            "type": "string"
+          },
+          "SubjectSubsid": {
+            "type": "string"
+          },
+          "CaseVersion": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "HandlingCocode",
+          "SubjectCocode"
+        ],
+        "xml": {
+          "name": "SubrogationSource",
+          "namespace": "http://dint.arbfile.org/standard/commands/subro/v5"
+        }
+      },
+      "Subsidiary": {
+        "type": "object",
+        "properties": {
+          "subsidCode": {
+            "type": "string",
+            "xml": {
+              "name": "Subsid"
+            }
+          },
+          "name": {
+            "type": "string",
+            "xml": {
+              "name": "Name"
+            }
+          }
+        },
+        "xml": {
+          "name": "Subsidiary",
+          "namespace": "http://dint.arbfile.org/standard/types/domain/v5"
+        }
+      },
+      "UpdateDemandDetails": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "Demander",
+              "Responder",
+              "ThirdPartyDemander",
+              "ThirdPartyResponder"
+            ],
+            "xml": {
+              "name": "Role"
+            }
+          },
+          "incident": {
+            "$ref": "#/components/schemas/Incident",
+            "xml": {
+              "name": "Incident"
+            }
+          },
+          "demanderParty": {
+            "$ref": "#/components/schemas/Company",
+            "xml": {
+              "name": "DemanderParty"
+            }
+          },
+          "responderParty": {
+            "$ref": "#/components/schemas/Company",
+            "xml": {
+              "name": "ResponderParty"
+            }
+          },
+          "demanderDetails": {
+            "$ref": "#/components/schemas/DemanderDetails",
+            "xml": {
+              "name": "DemanderDetails"
+            }
+          },
+          "responderDetails": {
+            "$ref": "#/components/schemas/ResponderDetails",
+            "xml": {
+              "name": "ResponderDetails"
+            }
+          }
+        },
+        "required": [
+          "role"
+        ],
+        "xml": {
+          "name": "UpdateDemandDetails",
+          "namespace": "http://dint.arbfile.org/standard/commands/subro/v5"
+        }
+      },
+      "Vehicle": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "string",
+            "xml": {
+              "name": "Year"
+            }
+          },
+          "make": {
+            "type": "string",
+            "xml": {
+              "name": "Make"
+            }
+          },
+          "model": {
+            "type": "string",
+            "xml": {
+              "name": "Model"
+            }
+          },
+          "plateNumber": {
+            "type": "string",
+            "xml": {
+              "name": "PlateNumber"
+            }
+          },
+          "plateState": {
+            "type": "string",
+            "xml": {
+              "name": "PlateState"
+            }
+          },
+          "vin": {
+            "type": "string",
+            "xml": {
+              "name": "VIN"
+            }
+          }
+        }
+      },
+      "ExternalCommand": {
+        "type": "object",
+        "properties": {
+          "cocodeAsInternal": {
+            "$ref": "#/components/schemas/Cocode"
+          },
+          "requestorGuid": {
+            "type": "string"
+          },
+          "commandName": {
+            "type": "string"
+          }
+        }
+      },
+      "DataSource": {
+        "type": "object",
+        "properties": {
+          "contentType": {
+            "type": "string"
+          },
+          "outputStream": {
+
+          },
+          "name": {
+            "type": "string"
+          },
+          "inputStream": {
+
+          }
+        }
+      }
+    }
+  }
+}

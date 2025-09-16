@@ -169,3 +169,23 @@
   - Dev01
   - SES
   - REST
+
+
+# TEST - Venkat's OpenAPI Spec Test
+# ─────────────────────────────────────
+- apiId: venkat-api-test
+  displayName: Venkat - API Test REST
+  path: venkat/test/rest
+  format: openapi+json
+  serviceUrl: https://dintdev01.arbfile.org/paysol-proxy-web/rest
+  specPath: ./specs/sample_di_openapi.json
+  protocols:
+  - https
+  apiType: http
+  subscriptionRequired: false
+  tags:
+  - Venkat
+  - Test
+  - REST
+
+
