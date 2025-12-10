@@ -35,7 +35,9 @@ on:
         required: true
         type: choice
         options:
-          - dev
+          - dev01
+          - dev03
+          - qa01
         #   - staging
         #   - prod
       deployment_mode:
@@ -148,6 +150,7 @@ jobs:
       
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      CONFIG_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
   # Post-deployment testing (optional)
   post-deployment-test:
